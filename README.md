@@ -4,6 +4,13 @@ We are creating tablet-based stories for an in-situ exhibition on the concept of
 
 Notre concept s'articule autour du care dans la rue. Partager un moment avec les personnes de la rue autour du thé et du café.
 
+# Whatsup repo??
+
+- [Process](process/README.md)
+- [Concept presentations](press/README.md)
+- [Code](unity/README.md)
+
+
 ![](process/assets/framing-shots-scenes.jpeg)
 
 # Team
