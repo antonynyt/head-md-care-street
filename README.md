@@ -6,9 +6,9 @@ Notre concept s'articule autour du care dans la rue. Partager un moment avec les
 
 # Whatsup repo??
 
-- [Process](process/README.md)
-- [Concept presentations](press/README.md)
-- [Code](unity/README.md)
+- Process: [process/](process/README.md)
+- Concept Presentations: [press/](press/README.md)
+- Code: [unity/](unity/README.md)
 
 
 ![](process/assets/framing-shots-scenes.jpeg)
