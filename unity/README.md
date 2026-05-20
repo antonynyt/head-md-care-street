@@ -4,6 +4,8 @@ This is the code, we will have our prototypes here.
 
 ## Collaborate
 
+> This is the ideal way of doing it but we will not proceed that way beacause it's too complex for a small project.
+
 ### 1. Fork the Repository
 
 Click the **Fork** button on GitHub to create your own copy under your account.
