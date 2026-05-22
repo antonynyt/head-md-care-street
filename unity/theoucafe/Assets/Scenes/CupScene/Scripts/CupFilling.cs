@@ -5,9 +5,9 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private Transform fillTarget;
     [SerializeField] private float fillSpeed = 1f;
-    [SerializeField] private float emptyMultiplier = 1f;
-    [SerializeField] private float minY = 0f;
-    [SerializeField] private float maxY = 1f;
+    [SerializeField] private float emptySpeedMult = 1f;
+    [SerializeField] private float minYFill = 0f;
+    [SerializeField] private float maxYFill = 1f;
 
     [SerializeField] private Transform cameraToMove;
     [SerializeField] private float cameraEndY = 5f;
@@ -40,9 +40,9 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (isPressing)
             currentY += delta;
         else
-            currentY -= delta * emptyMultiplier;
+            currentY -= delta * emptySpeedMult;
 
-        currentY = Mathf.Clamp(currentY, minY, maxY);
+        currentY = Mathf.Clamp(currentY, minYFill, maxYFill);
 
         if (fillTarget != null)
         {
@@ -53,7 +53,7 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (cameraToMove != null && hasPressedOnce && !isPressing)
         {
-            float empty01 = 1f - Mathf.InverseLerp(minY, releaseStartY, currentY);
+            float empty01 = 1f - Mathf.InverseLerp(minYFill, releaseStartY, currentY);
             float cameraT = releasedFill01 * empty01;
             cameraToMove.position = Vector3.Lerp(cameraStartPos, cameraEndPos, cameraT);
         }
@@ -69,6 +69,6 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         isPressing = false;
         releaseStartY = currentY;
-        releasedFill01 = Mathf.InverseLerp(minY, maxY, currentY);
+        releasedFill01 = Mathf.InverseLerp(minYFill, maxYFill, currentY);
     }
 }
