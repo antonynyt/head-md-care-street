@@ -1,0 +1,7 @@
+﻿title: Bike
+---
+Let's go see if anyone is arround today.
+
+-> CupScene
+    <<change_scene RobertoScene>>
+===
