@@ -51,4 +51,24 @@ Valider moodboard, palette, onboarding, assets
 
 - [ ] Yarn flow yes
 
-## Build & Presentation
+
+---
+
+## 29.05.2026
+
+- [ ] Import YARN -> **Antony**
+- [ ] Who does what today ? -> assets list, main story
+--
+- [ ] Roberto draft of story. 
+- [ ] Assets list on paper.
+- [ ] Unity project folder structure.
+
+### Story
+
+- What is Roberto's passion? What does he lives for?
+- What fragment of his life we appear? What happens? What is the current tension?
+- What does he want to share?
+- Idées par rapport à ce matin: Voleurs honnêtes, bibliothèque, Cours jusqu'à 4am sur un banc
+- Why do we remember him at the end of the experience?
+
+Avoir une sorte de toît, grande chambre dans la nature, dormir assis, être en contact avec des humains, le social.
