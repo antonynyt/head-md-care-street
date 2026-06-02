@@ -56,12 +56,12 @@ Valider moodboard, palette, onboarding, assets
 
 ## 29.05.2026
 
-- [ ] Import YARN -> **Antony**
-- [ ] Who does what today ? -> assets list, main story
+- [x] Import YARN -> **Antony**
+- [x] Who does what today ? -> assets list, main story
 --
-- [ ] Roberto draft of story. 
-- [ ] Assets list on paper.
-- [ ] Unity project folder structure.
+- [x] Roberto draft of story. 
+- [x] Assets list on paper.
+- [x] Unity project folder structure.
 
 ### Story
 
