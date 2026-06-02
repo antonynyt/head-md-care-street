@@ -3,5 +3,5 @@
 Let's go see if anyone is arround today.
 
 -> CupScene
-    <<change_scene RobertoScene>>
+    <<change_scene GboxCupScene>>
 ===
