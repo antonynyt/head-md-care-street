@@ -1,9 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+
+    // TODO: replace steps speed with audio length
+    // TODO: replace emptying with the dialog audio
+
+    // TODO: get the audio from the YarnSpinner and use its length for step timing
+    
     [SerializeField] private string fillPropertyName = "_Fill";
     [SerializeField] private float fillSpeed = 0.1f;
     [SerializeField] private float emptySpeedMult = 2f;
@@ -11,6 +18,11 @@ public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     [SerializeField] private int fillSteps = 3;
     [SerializeField] private float stepDuration = 5f;
     [SerializeField] private AnimationCurve stepCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+    // Events for external listeners (camera controllers, etc.)
+    public UnityEvent OnFillStarted = new UnityEvent();
+    public UnityEvent<float> OnFillProgress = new UnityEvent<float>();
+    public UnityEvent<float> OnFillReleased = new UnityEvent<float>();
 
     private bool isPressing;
     private float currentFill01 = 0f;
@@ -23,7 +35,6 @@ public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     private void Start()
     {
-
         propertyBlock = new MaterialPropertyBlock();
         ResolveLiquidRenderer();
         ApplyFill();
@@ -36,12 +47,17 @@ public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHa
             currentFill01 -= fillSpeed * emptySpeedMult * Time.deltaTime;
             currentFill01 = Mathf.Clamp01(currentFill01);
             ApplyFill();
+            OnFillProgress.Invoke(currentFill01);
         }
+
+        // "step passed" = completed full steps
+        CurrentStep = Mathf.Clamp(Mathf.FloorToInt(currentFill01 / StepSize), 0, fillSteps);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         isPressing = true;
+        OnFillStarted.Invoke();
 
         if (fillRoutine == null)
             fillRoutine = StartCoroutine(FillStepRoutine());
@@ -50,6 +66,16 @@ public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public void OnPointerUp(PointerEventData eventData)
     {
         isPressing = false;
+
+        // only allow zoom if at least step 1 is completed
+        if (CurrentStep < 1)
+        {
+            OnFillReleased.Invoke(0f);
+            return;
+        }
+
+        // send GLOBAL released fill (not step-local)
+        OnFillReleased.Invoke(currentFill01);
     }
 
     private IEnumerator FillStepRoutine()
@@ -71,6 +97,10 @@ public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHa
                 float t = stepCurve.Evaluate(Mathf.Clamp01(elapsed / stepDuration));
                 currentFill01 = Mathf.Lerp(stepStartFill, stepEndFill, t);
                 ApplyFill();
+
+                // notify listeners during filling
+                OnFillProgress.Invoke(currentFill01);
+
                 yield return null;
             }
 
@@ -78,6 +108,7 @@ public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
             currentFill01 = stepEndFill;
             ApplyFill();
+            OnFillProgress.Invoke(currentFill01);
 
             if (Mathf.Approximately(currentFill01, 1f)) break;
         }
@@ -107,4 +138,6 @@ public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         propertyBlock.SetFloat(fillPropertyName, currentFill01);
         liquidRenderer.SetPropertyBlock(propertyBlock);
     }
+
+    public int CurrentStep { get; private set; }
 }
