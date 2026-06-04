@@ -5,10 +5,8 @@ using UnityEngine.Events;
 
 public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-
     // TODO: replace steps speed with audio length
     // TODO: replace emptying with the dialog audio
-
     // TODO: get the audio from the YarnSpinner and use its length for step timing
     
     [SerializeField] private string fillPropertyName = "_Fill";
@@ -25,6 +23,7 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public UnityEvent<float> OnFillReleased = new UnityEvent<float>();
 
     private bool isPressing;
+    private bool isLocked; // prevents interaction until the next sequence
     private float currentFill01 = 0f;
 
     private Coroutine fillRoutine;
@@ -50,12 +49,14 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             OnFillProgress.Invoke(currentFill01);
         }
 
-        // "step passed" = completed full steps
         CurrentStep = Mathf.Clamp(Mathf.FloorToInt(currentFill01 / StepSize), 0, fillSteps);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (isLocked)
+            return;
+
         isPressing = true;
         OnFillStarted.Invoke();
 
@@ -65,17 +66,32 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        isPressing = false;
+        if (isLocked)
+            return;
 
-        // only allow zoom if at least step 1 is completed
+        isPressing = false;
+        isLocked = true; // lock immediately after the first release
+
         if (CurrentStep < 1)
         {
             OnFillReleased.Invoke(0f);
             return;
         }
 
-        // send GLOBAL released fill (not step-local)
         OnFillReleased.Invoke(currentFill01);
+    }
+
+    public void ResetForNextSequence(bool clearFill = true)
+    {
+        isLocked = false;
+        isPressing = false;
+
+        if (clearFill)
+        {
+            currentFill01 = 0f;
+            ApplyFill();
+            OnFillProgress.Invoke(currentFill01);
+        }
     }
 
     private IEnumerator FillStepRoutine()
@@ -97,8 +113,6 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 float t = stepCurve.Evaluate(Mathf.Clamp01(elapsed / stepDuration));
                 currentFill01 = Mathf.Lerp(stepStartFill, stepEndFill, t);
                 ApplyFill();
-
-                // notify listeners during filling
                 OnFillProgress.Invoke(currentFill01);
 
                 yield return null;
