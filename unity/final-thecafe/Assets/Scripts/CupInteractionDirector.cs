@@ -8,31 +8,30 @@ public class CupInteractionDirector : MonoBehaviour
     public class CupSequence
     {
         public string sequenceName;
-        public string fillNode;
-        public string replyNode;
 
-        public AudioClip[] fillStepAudios;   // one audio per fill step
-        public AudioClip releaseAudio;       // one audio for emptying
+        [Header("Yarn nodes")]
+        public string[] fillStepNodes = new string[3];
+        public string[] replyStepNodes = new string[3];
     }
 
     [Header("References")]
     [SerializeField] private CupFilling cup;
     [SerializeField] private DialogueRunner dialogueRunner;
-    [SerializeField] private AudioSource audioSource;
 
     [Header("Sequence Data")]
     [SerializeField] private CupSequence[] sequences;
     [SerializeField] private int currentSequenceIndex = 0;
 
-    private int lastFillStep = -1;
-    private Coroutine releaseRoutine;
+    private int lastTriggeredStep = 0;
+    private bool isPressing;
     private bool waitingForRelease;
+    private Coroutine releaseRoutine;
 
     private void Start()
     {
-        if (cup == null || dialogueRunner == null || audioSource == null)
+        if (cup == null || dialogueRunner == null)
         {
-            Debug.LogWarning("CupInteractionDirector: assign cup, dialogueRunner, and audioSource.");
+            Debug.LogWarning("CupInteractionDirector: assign cup and dialogueRunner.");
             enabled = false;
             return;
         }
@@ -66,27 +65,31 @@ public class CupInteractionDirector : MonoBehaviour
     {
         var sequence = CurrentSequence;
         if (sequence == null)
+        {
+            Debug.LogWarning("CupInteractionDirector: no current sequence.");
             return;
+        }
 
+        isPressing = true;
         waitingForRelease = false;
-        lastFillStep = -1;
+        lastTriggeredStep = 0;
 
-        if (!string.IsNullOrWhiteSpace(sequence.fillNode))
-            dialogueRunner.StartDialogue(sequence.fillNode);
-
-        PlayFillStepAudio(0);
+        PlayFillStep(sequence, 0);
     }
 
     private void HandleFillProgress(float fill01)
     {
         var sequence = CurrentSequence;
-        if (sequence == null || sequence.fillStepAudios == null || sequence.fillStepAudios.Length == 0)
+        if (sequence == null || !isPressing)
             return;
 
-        int step = Mathf.Clamp(cup.CurrentStep, 0, sequence.fillStepAudios.Length - 1);
+        int currentStep = cup.CurrentStep;
 
-        if (step != lastFillStep)
-            PlayFillStepAudio(step);
+        if (currentStep > lastTriggeredStep)
+        {
+            lastTriggeredStep = currentStep;
+            PlayFillStep(sequence, currentStep);
+        }
     }
 
     private void HandleFillReleased(float fill01)
@@ -95,6 +98,7 @@ public class CupInteractionDirector : MonoBehaviour
         if (sequence == null || waitingForRelease)
             return;
 
+        isPressing = false;
         waitingForRelease = true;
 
         if (releaseRoutine != null)
@@ -103,51 +107,42 @@ public class CupInteractionDirector : MonoBehaviour
         releaseRoutine = StartCoroutine(RunReleaseSequence(sequence));
     }
 
-    private void PlayFillStepAudio(int stepIndex)
+    private void PlayFillStep(CupSequence sequence, int stepNumber)
     {
-        var sequence = CurrentSequence;
-        if (sequence == null || sequence.fillStepAudios == null)
+        if (sequence.fillStepNodes == null)
             return;
 
-        if (stepIndex < 0 || stepIndex >= sequence.fillStepAudios.Length)
+        if (stepNumber < 0 || stepNumber >= sequence.fillStepNodes.Length)
             return;
 
-        var clip = sequence.fillStepAudios[stepIndex];
-        if (clip == null)
-            return;
-
-        lastFillStep = stepIndex;
-
-        audioSource.Stop();
-        audioSource.clip = clip;
-        audioSource.Play();
-
-        cup.SetStepDuration(clip.length);
+        string node = sequence.fillStepNodes[stepNumber];
+        if (!string.IsNullOrWhiteSpace(node))
+            dialogueRunner.StartDialogue(node);
     }
 
     private IEnumerator RunReleaseSequence(CupSequence sequence)
     {
-        if (sequence.releaseAudio != null)
+        int replyIndex = Mathf.Clamp(lastTriggeredStep, 0, 2);
+
+        if (sequence.replyStepNodes != null &&
+            replyIndex < sequence.replyStepNodes.Length)
         {
-            audioSource.Stop();
-            audioSource.clip = sequence.releaseAudio;
-            audioSource.Play();
-
-            cup.SetEmptyDuration(sequence.releaseAudio.length, 1f);
-
-            yield return new WaitForSeconds(sequence.releaseAudio.length);
+            string replyNode = sequence.replyStepNodes[replyIndex];
+            if (!string.IsNullOrWhiteSpace(replyNode))
+                dialogueRunner.StartDialogue(replyNode);
         }
 
-        if (!string.IsNullOrWhiteSpace(sequence.replyNode))
-            dialogueRunner.StartDialogue(sequence.replyNode);
-
         releaseRoutine = null;
+        yield break;
     }
 
     public void SetSequenceIndex(int index)
     {
         currentSequenceIndex = Mathf.Clamp(index, 0, Mathf.Max(0, sequences.Length - 1));
+        lastTriggeredStep = 0;
+        isPressing = false;
         waitingForRelease = false;
+
         cup.ResetForNextSequence(clearFill: true);
     }
 }
