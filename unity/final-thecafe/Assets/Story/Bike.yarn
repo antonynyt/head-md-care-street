@@ -1,7 +1,7 @@
 ﻿title: Bike
 ---
-Let's go see if anyone is arround today.
+Let's go see if anyone is arround today. #line:0d30b40 
 
--> CupScene
+-> CupScene #line:096ec32 
     <<change_scene GboxCupScene>>
 ===
