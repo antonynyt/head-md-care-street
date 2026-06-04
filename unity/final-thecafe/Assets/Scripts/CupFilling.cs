@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class CupFillingShader : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 
     // TODO: replace steps speed with audio length

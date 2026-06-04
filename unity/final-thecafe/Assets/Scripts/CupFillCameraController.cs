@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CupFillCameraController : MonoBehaviour
 {
-    [SerializeField] private CupFillingShader cup;
+    [SerializeField] private CupFilling cup;
     [SerializeField] private Transform cameraToMove;
     [SerializeField] private float cameraEndY = 5f;
     [SerializeField] private float cameraEndZ = -3f;
@@ -26,7 +26,7 @@ public class CupFillCameraController : MonoBehaviour
     {
         if (cup == null || cameraToMove == null)
         {
-            Debug.LogWarning("CupFillCameraController: assign CupFillingShader and cameraToMove.");
+            Debug.LogWarning("CupFillCameraController: assign CupFilling and cameraToMove.");
             enabled = false;
             return;
         }
