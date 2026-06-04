@@ -154,4 +154,25 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
 
     public int CurrentStep { get; private set; }
+
+    public bool IsLocked => isLocked;
+
+    public void SetStepDuration(float duration)
+    {
+        stepDuration = Mathf.Max(0.01f, duration);
+    }
+
+    public void SetEmptyDuration(float duration, float startingFill01)
+    {
+        duration = Mathf.Max(0.01f, duration);
+        startingFill01 = Mathf.Clamp01(startingFill01);
+
+        if (fillSpeed <= 0.0001f)
+        {
+            emptySpeedMult = 1f;
+            return;
+        }
+
+        emptySpeedMult = startingFill01 / (fillSpeed * duration);
+    }
 }
