@@ -378,13 +378,13 @@ MonoBehaviour:
   sequences:
   - sequenceName: Day 1
     fillStepNodes:
-    - Roberto_Day1_M_1
-    - Roberto_Day1_M_2
-    - Roberto_Day1_M_3
+    - Day1_M_1
+    - Day1_M_2
+    - Day1_M_3
     replyStepNodes:
-    - Roberto_Day1_R_1
-    - Roberto_Day1_R_2
-    - Roberto_Day1_R_3
+    - Day1_R_1
+    - Day1_R_2
+    - Day1_R_3
   currentSequenceIndex: 0
 --- !u!4 &197908604
 Transform:
