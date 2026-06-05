@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
-public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class CupFilling : MonoBehaviour
 {
     // TODO: replace steps speed with audio length
     // TODO: replace emptying with the dialog audio
     // TODO: get the audio from the YarnSpinner and use its length for step timing
-    
+
     [SerializeField] private string fillPropertyName = "_Fill";
     [SerializeField] private float fillSpeed = 0.1f;
     [SerializeField] private float emptySpeedMult = 2f;
@@ -23,7 +23,7 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public UnityEvent<float> OnFillReleased = new UnityEvent<float>();
 
     private bool isPressing;
-    private bool isLocked; // prevents interaction until the next sequence
+    private bool isLocked;
     private float currentFill01 = 0f;
 
     [SerializeField] private float pressThreshold = 1f;
@@ -45,6 +45,14 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Update()
     {
+        bool pressing = Touchscreen.current?.primaryTouch.press.isPressed == true
+                     || Mouse.current?.leftButton.isPressed == true;
+
+        if (pressing && !isPressing)
+            OnPressDown();
+        else if (!pressing && isPressing)
+            OnPressUp();
+
         // Count press duration
         if (isPressing && !thresholdMet)
         {
@@ -69,26 +77,22 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         CurrentStep = Mathf.Clamp(Mathf.FloorToInt(currentFill01 / StepSize), 0, fillSteps);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    private void OnPressDown()
     {
-        if (isLocked)
-            return;
+        if (isLocked) return;
 
         isPressing = true;
         pressTimer = 0f;
         thresholdMet = false;
-        // Do NOT start the routine yet
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    private void OnPressUp()
     {
-        if (isLocked)
-            return;
+        if (isLocked) return;
 
         isPressing = false;
         pressTimer = 0f;
 
-        // If threshold was never met, don't lock — just let it empty
         if (!thresholdMet)
         {
             thresholdMet = false;
