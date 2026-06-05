@@ -26,6 +26,10 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private bool isLocked; // prevents interaction until the next sequence
     private float currentFill01 = 0f;
 
+    [SerializeField] private float pressThreshold = 1f;
+    private float pressTimer = 0f;
+    private bool thresholdMet = false;
+
     private Coroutine fillRoutine;
     private Renderer liquidRenderer;
     private MaterialPropertyBlock propertyBlock;
@@ -41,6 +45,19 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Update()
     {
+        // Count press duration
+        if (isPressing && !thresholdMet)
+        {
+            pressTimer += Time.deltaTime;
+            if (pressTimer >= pressThreshold)
+            {
+                thresholdMet = true;
+                OnFillStarted.Invoke();
+                if (fillRoutine == null)
+                    fillRoutine = StartCoroutine(FillStepRoutine());
+            }
+        }
+
         if (!isPressing)
         {
             currentFill01 -= fillSpeed * emptySpeedMult * Time.deltaTime;
@@ -58,10 +75,9 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             return;
 
         isPressing = true;
-        OnFillStarted.Invoke();
-
-        if (fillRoutine == null)
-            fillRoutine = StartCoroutine(FillStepRoutine());
+        pressTimer = 0f;
+        thresholdMet = false;
+        // Do NOT start the routine yet
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -70,7 +86,16 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             return;
 
         isPressing = false;
-        isLocked = true; // lock immediately after the first release
+        pressTimer = 0f;
+
+        // If threshold was never met, don't lock — just let it empty
+        if (!thresholdMet)
+        {
+            thresholdMet = false;
+            return;
+        }
+
+        isLocked = true;
 
         if (CurrentStep < 1)
         {
@@ -85,6 +110,8 @@ public class CupFilling : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         isLocked = false;
         isPressing = false;
+        pressTimer = 0f;
+        thresholdMet = false;
 
         if (clearFill)
         {
