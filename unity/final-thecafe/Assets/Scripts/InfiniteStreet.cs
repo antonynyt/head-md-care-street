@@ -6,8 +6,8 @@ public class InfiniteStreet : MonoBehaviour
     public GameObject streetA;
     public GameObject streetB;
     // Create a variable speed variable to control the speed of the street
-    public float speed = 5.0f;
-    float streetLength = 100.0f;
+    public float speed = 10.0f;
+    float streetLength = 250.0f;
 
     // Update is called once per frame
     void Update()
@@ -23,15 +23,15 @@ public class InfiniteStreet : MonoBehaviour
     // Move Street Method
     void MoveStreet(GameObject street)
     {
-        // negative x is the correct direction for the street to move in
-        // constantly move the street downwards
-        street.transform.Translate(Vector3.left * speed * Time.deltaTime);
+        // positive x is the correct direction for the street to move in
+        // constantly move the street to the right
+        street.transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 
     void CheckStreet(GameObject street)
     {
-        // if the street's x position is less than -50, use the JumpStreet function to move it to the right of the other street
-        if (street.transform.position.x < -50)
+        // if the street's x position is less than -170, use the JumpStreet function to move it to the right of the other street
+        if (street.transform.position.x < -170)
         {
             JumpStreet(street);
         }
@@ -39,7 +39,7 @@ public class InfiniteStreet : MonoBehaviour
 
     void JumpStreet(GameObject street)
     {
-        // Jump 100 to the right
-        street.transform.Translate(Vector3.right * streetLength * 2f);
+        // Jump 100 to the left
+        street.transform.Translate(Vector3.left * streetLength * 2f);
     }
 }
