@@ -31,7 +31,7 @@ public class InfiniteStreet : MonoBehaviour
     void CheckStreet(GameObject street)
     {
         // if the street's x position is less than -170, use the JumpStreet function to move it to the right of the other street
-        if (street.transform.position.x < -170)
+        if (street.transform.position.x < -300)
         {
             JumpStreet(street);
         }
