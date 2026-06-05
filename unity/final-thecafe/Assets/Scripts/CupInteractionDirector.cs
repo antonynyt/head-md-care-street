@@ -109,11 +109,8 @@ public class CupInteractionDirector : MonoBehaviour
 
     private void PlayFillStep(CupSequence sequence, int stepNumber)
     {
-        if (sequence.fillStepNodes == null)
-            return;
-
-        if (stepNumber < 0 || stepNumber >= sequence.fillStepNodes.Length)
-            return;
+        if (sequence.fillStepNodes == null) return;
+        if (stepNumber < 0 || stepNumber >= sequence.fillStepNodes.Length) return;
 
         string node = sequence.fillStepNodes[stepNumber];
         if (!string.IsNullOrWhiteSpace(node))
@@ -124,8 +121,7 @@ public class CupInteractionDirector : MonoBehaviour
     {
         int replyIndex = Mathf.Clamp(lastTriggeredStep, 0, 2);
 
-        if (sequence.replyStepNodes != null &&
-            replyIndex < sequence.replyStepNodes.Length)
+        if (sequence.replyStepNodes != null && replyIndex < sequence.replyStepNodes.Length)
         {
             string replyNode = sequence.replyStepNodes[replyIndex];
             if (!string.IsNullOrWhiteSpace(replyNode))

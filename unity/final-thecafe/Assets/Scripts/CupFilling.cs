@@ -172,7 +172,7 @@ public class CupFilling : MonoBehaviour
             }
         }
 
-        Debug.LogWarning("CupFillingShader: No child named 'Liquid' found.");
+        Debug.LogWarning("CupFilling: No child named 'Liquid' found.");
     }
 
     private void ApplyFill()
