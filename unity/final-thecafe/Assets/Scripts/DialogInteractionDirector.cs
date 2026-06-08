@@ -4,6 +4,9 @@ using Yarn.Unity;
 
 public class CupInteractionDirector : MonoBehaviour
 {
+    public static CupInteractionDirector Instance { get; private set; }
+
+
     [System.Serializable]
     public class CupSequence
     {
@@ -29,6 +32,7 @@ public class CupInteractionDirector : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         if (cup == null || dialogueRunner == null)
         {
             Debug.LogWarning("CupInteractionDirector: assign cup and dialogueRunner.");
@@ -113,8 +117,7 @@ public class CupInteractionDirector : MonoBehaviour
         if (stepNumber < 0 || stepNumber >= sequence.fillStepNodes.Length) return;
 
         string node = sequence.fillStepNodes[stepNumber];
-        if (!string.IsNullOrWhiteSpace(node))
-            dialogueRunner.StartDialogue(node);
+        if (!string.IsNullOrWhiteSpace(node)) dialogueRunner.StartDialogue(node);
     }
 
     private IEnumerator RunReleaseSequence(CupSequence sequence)
@@ -125,7 +128,10 @@ public class CupInteractionDirector : MonoBehaviour
         {
             string replyNode = sequence.replyStepNodes[replyIndex];
             if (!string.IsNullOrWhiteSpace(replyNode))
+            {
                 dialogueRunner.StartDialogue(replyNode);
+
+            }
         }
 
         releaseRoutine = null;
@@ -140,5 +146,17 @@ public class CupInteractionDirector : MonoBehaviour
         waitingForRelease = false;
 
         cup.ResetFill(clearFill: true);   // ← fixed: was ResetForNextSequence
+    }
+
+    public float GetCurrentAudioLength()
+    {
+        VoiceOverPresenter presenter = dialogueRunner.GetComponentInChildren<VoiceOverPresenter>();
+        Debug.Log($"{presenter.audioSource}, {presenter.audioSource.clip}");
+        if (presenter != null && presenter.audioSource != null && presenter.audioSource.clip != null)
+        {
+            return presenter.audioSource.clip.length;
+        }
+
+        return -1;
     }
 }
