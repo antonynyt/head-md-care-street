@@ -139,6 +139,6 @@ public class CupInteractionDirector : MonoBehaviour
         isPressing = false;
         waitingForRelease = false;
 
-        cup.ResetForNextSequence(clearFill: true);
+        cup.ResetFill(clearFill: true);   // ← fixed: was ResetForNextSequence
     }
 }
