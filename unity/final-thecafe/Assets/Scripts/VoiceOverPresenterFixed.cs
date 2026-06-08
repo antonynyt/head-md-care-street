@@ -101,7 +101,7 @@ namespace Yarn.Unity
         /// LineCancellationToken)"/>
         public override async YarnTask RunLineAsync(LocalizedLine dialogueLine, LineCancellationToken lineCancellationToken)
         {
-            Debug.Log($"VoiceOverPresenter: Running line {dialogueLine.TextID} with asset {dialogueLine.Asset} and source {dialogueLine.Source}");
+            //Debug.Log($"VoiceOverPresenter: Running line {dialogueLine.TextID} with asset {dialogueLine.Asset} and source {dialogueLine.Source}");
 
             currentLine = dialogueLine;
 
@@ -126,7 +126,7 @@ namespace Yarn.Unity
 
                 if (this.endLineWhenVoiceoverComplete && dialogueRunner != null)
                 {
-                    Debug.Log("Requesting next line from DialogueRunner because voice over is complete 1");
+                    //Debug.Log("Requesting next line from DialogueRunner because voice over is complete 1");
 
                     // If we didn't get a line, but we were configured to
                     // advance the line on end, then we should act as though
@@ -214,12 +214,12 @@ namespace Yarn.Unity
 
             if (!lineCancellationToken.IsNextContentRequested && waitTimeAfterLineComplete > 0)
             {
-                Debug.Log($"Waiting for {waitTimeAfterLineComplete} seconds after line {dialogueLine.TextID} complete before requesting next line.");
+                //Debug.Log($"Waiting for {waitTimeAfterLineComplete} seconds after line {dialogueLine.TextID} complete before requesting next line.");
                 await YarnTask.Delay(
                     TimeSpan.FromSeconds(waitTimeAfterLineComplete),
                     lineCancellationToken.NextContentToken
                 ).SuppressCancellationThrow();
-                Debug.Log($"Finished waiting for {waitTimeAfterLineComplete} seconds after line {dialogueLine.TextID} complete.");
+                //Debug.Log($"Finished waiting for {waitTimeAfterLineComplete} seconds after line {dialogueLine.TextID} complete.");
 
                 if (currentLine != dialogueLine)
                 {
@@ -254,7 +254,7 @@ namespace Yarn.Unity
                 }
                 else
                 {
-                    Debug.Log("Requesting next line from DialogueRunner because voice over is complete 2 on line " + dialogueLine.TextID);
+                    //Debug.Log("Requesting next line from DialogueRunner because voice over is complete 2 on line " + dialogueLine.TextID);
                     dialogueRunner.RequestNextLine();
                 }
             }
