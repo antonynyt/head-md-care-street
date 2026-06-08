@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 
 public class CupInteractionDirector : MonoBehaviour
@@ -29,6 +31,14 @@ public class CupInteractionDirector : MonoBehaviour
     private bool isPressing;
     private bool waitingForRelease;
     private Coroutine releaseRoutine;
+
+    private void Update()
+    {
+        if (Keyboard.current == null || !Keyboard.current.rKey.wasPressedThisFrame)
+            return;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     private void Start()
     {
@@ -117,7 +127,10 @@ public class CupInteractionDirector : MonoBehaviour
         if (stepNumber < 0 || stepNumber >= sequence.fillStepNodes.Length) return;
 
         string node = sequence.fillStepNodes[stepNumber];
-        if (!string.IsNullOrWhiteSpace(node)) dialogueRunner.StartDialogue(node);
+        if (!string.IsNullOrWhiteSpace(node)) 
+        {
+            _ = dialogueRunner.StartDialogue(node);
+        }
     }
 
     private IEnumerator RunReleaseSequence(CupSequence sequence)
@@ -129,7 +142,7 @@ public class CupInteractionDirector : MonoBehaviour
             string replyNode = sequence.replyStepNodes[replyIndex];
             if (!string.IsNullOrWhiteSpace(replyNode))
             {
-                dialogueRunner.StartDialogue(replyNode);
+                _ = dialogueRunner.StartDialogue(replyNode);
 
             }
         }
