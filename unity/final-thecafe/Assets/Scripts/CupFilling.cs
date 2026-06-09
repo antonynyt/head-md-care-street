@@ -120,4 +120,29 @@ public class CupFilling : MonoBehaviour
         propertyBlock.SetFloat(fillPropertyName, currentFill01);
         liquidRenderer.SetPropertyBlock(propertyBlock);
     }
+
+    public void JiggleCup()
+    {
+        // jiggle the cup by briefly modifying the fill level in a way that doesn't affect the actual fill state
+        StartCoroutine(JiggleRoutine());
+    }
+
+    private IEnumerator JiggleRoutine()
+    {
+        float jiggleAmount = 0.1f;
+        float jiggleDuration = 0.5f;
+
+        float elapsed = 0f;
+        while (elapsed < jiggleDuration)
+        {
+            elapsed += Time.deltaTime;
+            float offset = Mathf.Sin(elapsed / jiggleDuration * Mathf.PI * 2) * jiggleAmount;
+            propertyBlock.SetFloat(fillPropertyName, currentFill01 + offset);
+            liquidRenderer.SetPropertyBlock(propertyBlock);
+            yield return null;
+        }
+
+        // Ensure we end on the correct fill level
+        ApplyFill();
+    }
 }
