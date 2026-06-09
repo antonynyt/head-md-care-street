@@ -15,7 +15,7 @@ Tu lis toujours le grec, l'arabe, le chinois et le latin ? #line:d3_m3
 
 title: Day3_R_1
 ---
-Roberto: Un dictionnaire de sanskrit. #line:d3_r1
+Roberto: C'est un dictionnaire de sanskrit. #line:d3_r1
 ===
 
 title: Day3_R_2
@@ -40,7 +40,7 @@ Roberto: Plus de temps pour lire, apprendre et réfléchir... #line:d3_r3g_hi
 Roberto: Vous savez, je passe tellement de temps à la bibliothèque qu'il a dû me voir étudier le sanskrit. C'est ma nouvelle passion. J'adore ! #line:d3_r3c_mid
 Roberto: Même quand je travaillais dans l'hôtellerie, je passais beaucoup de temps à la bibliothèque. #line:d3_r3d_mid
 <<else>>
-Roberto: C'est assez complexe, mais j'adore apprendre. #line:d3_r3c_lo
+Roberto: C'est assez complexe, mais j'adore apprendre des langues. #line:d3_r3c_lo
 <<endif>>
 
 Roberto: À la prochaine ! #line:d3_r3_end
