@@ -487,17 +487,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CupInteractionDirector
   cup: {fileID: 1959065678}
   dialogueRunner: {fileID: 998987492}
-  sequences:
-  - sequenceName: Day 1
+  sequence:
+    sequenceName: Day1
     fillStepNodes:
     - Day1_M_1
     - Day1_M_2
-    - Day1_M_3
+    - Day1_M_2
     replyStepNodes:
     - Day1_R_1
     - Day1_R_2
     - Day1_R_3
-  currentSequenceIndex: 0
 --- !u!4 &197908604
 Transform:
   m_ObjectHideFlags: 0
@@ -1326,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: autoStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: startNode
@@ -1338,7 +1337,7 @@ PrefabInstance:
       objectReference: {fileID: 7545569452688597077, guid: 47a63f0302590e84094507f1ba64c810, type: 3}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: runSelectedOptionAsLine
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: dialoguePresenters.Array.size

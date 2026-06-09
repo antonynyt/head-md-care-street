@@ -8,7 +8,6 @@ public class CupInteractionDirector : MonoBehaviour
 {
     public static CupInteractionDirector Instance { get; private set; }
 
-
     [System.Serializable]
     public class CupSequence
     {
@@ -24,8 +23,7 @@ public class CupInteractionDirector : MonoBehaviour
     [SerializeField] private DialogueRunner dialogueRunner;
 
     [Header("Sequence Data")]
-    [SerializeField] private CupSequence[] sequences;
-    [SerializeField] private int currentSequenceIndex = 0;
+    [SerializeField] private CupSequence sequence;
 
     private int lastTriggeredStep = 0;
     private bool isPressing;
@@ -50,6 +48,11 @@ public class CupInteractionDirector : MonoBehaviour
             return;
         }
 
+        // Charger les variables sauvegardées (day1_fill, day2_fill, etc.)
+        string savePath = System.IO.Path.Combine(Application.persistentDataPath, "roberto_save");
+        if (System.IO.File.Exists(savePath))
+            dialogueRunner.LoadStateFromPersistentStorage("roberto_save");
+
         cup.OnFillStarted.AddListener(HandleFillStarted);
         cup.OnFillProgress.AddListener(HandleFillProgress);
         cup.OnFillReleased.AddListener(HandleFillReleased);
@@ -64,23 +67,11 @@ public class CupInteractionDirector : MonoBehaviour
         cup.OnFillReleased.RemoveListener(HandleFillReleased);
     }
 
-    private CupSequence CurrentSequence
-    {
-        get
-        {
-            if (sequences == null || sequences.Length == 0)
-                return null;
-
-            return sequences[Mathf.Clamp(currentSequenceIndex, 0, sequences.Length - 1)];
-        }
-    }
-
     private void HandleFillStarted()
     {
-        var sequence = CurrentSequence;
         if (sequence == null)
         {
-            Debug.LogWarning("CupInteractionDirector: no current sequence.");
+            Debug.LogWarning("CupInteractionDirector: no sequence assigned.");
             return;
         }
 
@@ -88,29 +79,24 @@ public class CupInteractionDirector : MonoBehaviour
         waitingForRelease = false;
         lastTriggeredStep = 0;
 
-        PlayFillStep(sequence, 0);
+        PlayFillStep(0);
     }
 
     private void HandleFillProgress(float fill01)
     {
-        var sequence = CurrentSequence;
-        if (sequence == null || !isPressing)
-            return;
+        if (sequence == null || !isPressing) return;
 
         int currentStep = cup.CurrentStep;
-
         if (currentStep > lastTriggeredStep)
         {
             lastTriggeredStep = currentStep;
-            PlayFillStep(sequence, currentStep);
+            PlayFillStep(currentStep);
         }
     }
 
     private void HandleFillReleased(float fill01)
     {
-        var sequence = CurrentSequence;
-        if (sequence == null || waitingForRelease)
-            return;
+        if (sequence == null || waitingForRelease) return;
 
         isPressing = false;
         waitingForRelease = true;
@@ -118,22 +104,20 @@ public class CupInteractionDirector : MonoBehaviour
         if (releaseRoutine != null)
             StopCoroutine(releaseRoutine);
 
-        releaseRoutine = StartCoroutine(RunReleaseSequence(sequence));
+        releaseRoutine = StartCoroutine(RunReleaseSequence());
     }
 
-    private void PlayFillStep(CupSequence sequence, int stepNumber)
+    private void PlayFillStep(int stepNumber)
     {
         if (sequence.fillStepNodes == null) return;
         if (stepNumber < 0 || stepNumber >= sequence.fillStepNodes.Length) return;
 
         string node = sequence.fillStepNodes[stepNumber];
-        if (!string.IsNullOrWhiteSpace(node)) 
-        {
+        if (!string.IsNullOrWhiteSpace(node))
             _ = dialogueRunner.StartDialogue(node);
-        }
     }
 
-    private IEnumerator RunReleaseSequence(CupSequence sequence)
+    private IEnumerator RunReleaseSequence()
     {
         int replyIndex = Mathf.Clamp(lastTriggeredStep, 0, 2);
 
@@ -141,35 +125,30 @@ public class CupInteractionDirector : MonoBehaviour
         {
             string replyNode = sequence.replyStepNodes[replyIndex];
             if (!string.IsNullOrWhiteSpace(replyNode))
-            {
                 _ = dialogueRunner.StartDialogue(replyNode);
-
-            }
         }
 
         releaseRoutine = null;
         yield break;
     }
 
-    public void SetSequenceIndex(int index)
+    /// <summary>
+    /// Appelé par CustomYarnCommands.change_scene avant de changer de scène,
+    /// pour s'assurer que les variables Yarn sont sauvegardées sur disque.
+    /// </summary>
+    public void SaveState()
     {
-        currentSequenceIndex = Mathf.Clamp(index, 0, Mathf.Max(0, sequences.Length - 1));
-        lastTriggeredStep = 0;
-        isPressing = false;
-        waitingForRelease = false;
-
-        cup.ResetFill(clearFill: true);   // ← fixed: was ResetForNextSequence
+        dialogueRunner.SaveStateToPersistentStorage("roberto_save");
+        Debug.Log("CupInteractionDirector: state saved.");
     }
 
-    public float GetCurrentAudioLength()
+    /// <summary>
+    /// Reset complet — appelé si on veut recommencer depuis le jour 1.
+    /// </summary>
+    public void ResetStory()
     {
-        VoiceOverPresenter presenter = dialogueRunner.GetComponentInChildren<VoiceOverPresenter>();
-        Debug.Log($"{presenter.audioSource}, {presenter.audioSource.clip}");
-        if (presenter != null && presenter.audioSource != null && presenter.audioSource.clip != null)
-        {
-            return presenter.audioSource.clip.length;
-        }
-
-        return -1;
+        dialogueRunner.VariableStorage.Clear();
+        dialogueRunner.SaveStateToPersistentStorage("roberto_save");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
