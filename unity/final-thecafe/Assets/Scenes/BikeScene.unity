@@ -23976,7 +23976,7 @@ MonoBehaviour:
   wheel_speed: 15
   pressDurationToZero: 5
   speedTransitionRate: 6
-  shortPressThreshold: 2
+  shortPressThreshold: 0.1
   sceneChangeThreshold: 6
   bellEffectDuration: 1
   bellRotationAmount: 10

@@ -403,7 +403,7 @@ public class touchscreen : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         // stop any current sound and play the brake sound continuously while pressing
         audioSource.Stop();
         audioSource.clip = brake_0;
-        audioSource.loop = true;
+        audioSource.loop = false;
         audioSource.volume = 1f;
         audioSource.Play();
 
