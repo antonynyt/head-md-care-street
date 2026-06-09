@@ -1,6 +1,5 @@
 ﻿title: Day1_M_1
 ---
-<<declare $day1_fill = 0>>
 Bonsoir Roberto. #line:d1_m1
 ===
 
@@ -11,36 +10,35 @@ Est-ce que tu veux un café ? #line:d1_m2
 
 title: Day1_M_3
 ---
-Comment ça va ? Tu as réfléchi à l'hébergement dont on avait parlé ? #line:d1_m3
+Tu as l'air bien placé ici. #line:d1_m3
 ===
 
 title: Day1_R_1
 ---
 <<ZoomOut 3.8>>
-Roberto: C'est bien de te revoir. #line:d1_r1
+Roberto: Bonsoir. Vous êtes qui? #line:d1_r1
 <<set $day1_fill to 1>>
-<<change_scene BikeScene>>
+<<change_scene RobertoWinter>>
 ===
 
 title: Day1_R_2
 ---
 <<ZoomOut 4.8>>
-Roberto: Bonsoir. Volontiers. #line:d1_r2a
-Roberto: C'est bien de te revoir. #line:d1_r2b
+Roberto: Bonsoir. Vous êtes qui? #line:d1_r2a
+Roberto: Merci pour le café. #line:d1_r2b
 <<set $day1_fill to 2>>
-<<change_scene BikeScene>>
+<<change_scene RobertoWinter>>
 ===
 
 title: Day1_R_3
 ---
 <<ZoomOut 30>>
-Roberto: Bonsoir, c'est bien de te revoir. #line:d1_r3a
-Roberto: Oui, merci pour le café. #line:d1_r3b
-Roberto: J'ai réfléchi à l'hébergement, mais pas cette fois. #line:d1_r3c
-Roberto: On m'a raconté qu'il y avait beaucoup de vols là-bas. #line:d1_r3d
-Roberto: Je suis très bien ici, sous mon grand arbre. #line:d1_r3e
+Roberto: Bonsoir. #line:d1_r3a
+Roberto: Merci pour le café. #line:d1_r3b
+Roberto: On m'a raconté qu'il y avait beaucoup de vols en hébergement d'urgence. #line:d1_r3d
+Roberto: Donc, je suis bien ici, sous mon grand arbre. #line:d1_r3e
 Roberto: C'est comme une grande chambre. #line:d1_r3f
 Roberto: Tant qu'il y a un toit au-dessus de la tête, je me sens un peu chez moi. #line:d1_r3g
 <<set $day1_fill to 3>>
-<<change_scene BikeScene>>
+<<change_scene RobertoWinter>>
 ===

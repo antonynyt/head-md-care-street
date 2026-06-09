@@ -1,49 +1,47 @@
 ﻿title: Day2_M_1
 ---
-Salut Roberto. Comment ça va ? #line:d2_m1
+Salut Roberto. ça fait un moment qu'on s'est pas vu. #line:d2_m1
 ===
 
 title: Day2_M_2
 ---
-Salut Roberto. Comment ça va ? #line:d2_m2a
-Est-ce que tu veux un café ? #line:d2_m2b
+Je te sers un café. #line:d2_m2b
 ===
 
 title: Day2_M_3
 ---
-Salut Roberto. #line:d2_m3a
-Comment ça va ? #line:d2_m3b
-Tu veux un café ? #line:d2_m3c
-Tu as réfléchi à l'hébergement dont on avait parlé ? Il fait plus froid, on sent l'hiver qui arrive aujourd'hui... #line:d2_m3d
+Il fait froid, on sent l'hiver est là... #line:d2_m3d
 ===
 
 title: Day2_R_1
 ---
-Roberto: Je vais bien, merci. L'hiver arrive lentement. #line:d2_r1
+<<ZoomOut 3.2>>
+Roberto: Oui c'est vrai. L'hiver est là. #line:d2_r1
 ===
 
 title: Day2_R_2
 ---
+<<ZoomOut 5.8>>
 Roberto: Tu sais que je ne dis jamais non à un café ! #line:d2_r2a
-Roberto: Je vais bien sous mon grand arbre. Je vois l'hiver qui arrive lentement. #line:d2_r2b
+Roberto: Surtout qu'il fait froid. #line:d2_r2b
 ===
 
 title: Day2_R_3
 ---
-Roberto: Salut, plaisir de te revoir. #line:d2_r3a
-Roberto: Oui, volontiers un café. Tu sais que je ne dis jamais non à un café ! #line:d2_r3b
-Roberto: Oui, il commence à faire froid, mais il y a pire. #line:d2_r3c
+<<ZoomOut 38>>
+Roberto: Salut, tu sais que je ne dis jamais non à un café ! #line:d2_r3a
+Roberto: Il commence à faire un peu froid, mais il y a pire. #line:d2_r3b
 
 <<if $day1_fill >= 3>>
-Roberto: L'année passée, c'était l'un des hivers les plus froids de ma vie. #line:d2_r3d_hi
-Roberto: Je dormais ici, assis sur la glace. #line:d2_r3e_hi
-Roberto: Je dors toujours assis parce que j'ai peur que quelqu'un vole mes affaires. #line:d2_r3f_hi
-Roberto: Cet hiver-là, il faisait tellement froid que je devais me réveiller plusieurs fois par nuit pour courir un peu et me réchauffer. #line:d2_r3g_hi
-Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3h_hi
+Roberto: L'année passée, c'était le pire hiver, un des plus froids de ma vie. #line:d2_r3d_hi
+Roberto: Je dormais là, assis sur un glaçon. #line:d2_r3e_hi
+Roberto: Je dors toujours assis parce que j'ai peur qu'on me vole mes affaires. #line:d2_r3f_hi
+Roberto: Cet hiver-là, il faisait tellement froid que je devais me réveiller plusieurs fois par nuit pour courir et me réchauffer. #line:d2_r3g_hi
 <<else>>
 Roberto: L'année passée, il faisait très froid. #line:d2_r3d_lo
-Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3e_lo
 <<endif>>
+
+Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3e_lo
 
 <<set $day2_fill to 3>>
 ===
