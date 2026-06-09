@@ -67,10 +67,10 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 3bae9a45d08efb04d8632cec5512f329, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 860529d43f14c6840ad992e061c4f5e1, type: 2}
+      objectReference: {fileID: 2100000, guid: 64166199c323540e39a6e9a1134ef727, type: 2}
     - target: {fileID: 919132149155446097, guid: 3bae9a45d08efb04d8632cec5512f329, type: 3}
       propertyPath: m_Name
-      value: cigarette
+      value: cig
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
