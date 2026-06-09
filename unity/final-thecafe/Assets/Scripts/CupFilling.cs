@@ -4,10 +4,12 @@ using UnityEngine.Events;
 
 public class CupFilling : MonoBehaviour
 {
+    public static CupFilling Instance { get; private set; }
+
     [SerializeField] private string fillPropertyName = "_Fill";
-    [SerializeField] private float emptySpeedMult = 0.5f;
     [SerializeField] private int fillSteps = 3;
     [SerializeField] private float totalFillTime = 10f;   // seconds to fill from 0 to 1
+    [SerializeField] public float totalEmptyTime = 10f;  // seconds to empty from CURRENT fill to 0
 
     public UnityEvent OnFillStarted = new UnityEvent();
     public UnityEvent<float> OnFillProgress = new UnityEvent<float>();
@@ -15,7 +17,8 @@ public class CupFilling : MonoBehaviour
 
     private bool isFilling;
     public float currentFill01 = 0f;
-    private float fillSpeed;
+    private float fillSpeed;          // cached 1 / totalFillTime
+    private float currentEmptySpeed;  // computed at start of each drain cycle
 
     private Renderer liquidRenderer;
     private MaterialPropertyBlock propertyBlock;
@@ -24,11 +27,17 @@ public class CupFilling : MonoBehaviour
     public bool IsFilling => isFilling;
     public int CurrentStep { get; private set; }
 
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
+
     private void Start()
     {
         propertyBlock = new MaterialPropertyBlock();
         ResolveLiquidRenderer();
         fillSpeed = 1f / Mathf.Max(0.01f, totalFillTime);
+        SetEmptySpeedFromCurrentFill();   // in case the cup starts with some fill
         ApplyFill();
     }
 
@@ -46,7 +55,8 @@ public class CupFilling : MonoBehaviour
         }
         else
         {
-            currentFill01 -= emptySpeedMult * Time.deltaTime;
+            // Drain at a constant speed that was set when emptying began
+            currentFill01 -= currentEmptySpeed * Time.deltaTime;
             currentFill01 = Mathf.Clamp01(currentFill01);
             ApplyFill();
             OnFillProgress.Invoke(currentFill01);
@@ -68,6 +78,7 @@ public class CupFilling : MonoBehaviour
     {
         if (!isFilling) return;
         isFilling = false;
+        SetEmptySpeedFromCurrentFill();   // lock the drain speed based on current fill
         OnFillReleased.Invoke(currentFill01);
     }
 
@@ -80,6 +91,13 @@ public class CupFilling : MonoBehaviour
             ApplyFill();
             OnFillProgress.Invoke(currentFill01);
         }
+    }
+
+    /// <summary> Computes the drain speed so it takes totalEmptyTime to reach 0 from currentFill01. </summary>
+    public void SetEmptySpeedFromCurrentFill()
+    {
+        float safeTime = Mathf.Max(0.0001f, totalEmptyTime);
+        currentEmptySpeed = currentFill01 / safeTime;
     }
 
     private void ResolveLiquidRenderer()
