@@ -192,12 +192,12 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DeepColor: {r: 0.42070132, g: 0.52411705, b: 0.5471698, a: 0.5803922}
-    - _Deep_Color: {r: 0.5518868, g: 1, b: 0.9573225, a: 0.79607844}
+    - _Deep_Color: {r: 0, g: 0, b: 0, a: 0.79607844}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.65882355}
     - _FoamScale: {r: 100, g: 400, b: 0, a: 0}
     - _FoamScale_1: {r: 100, g: 200, b: 0, a: 0}
-    - _Foam_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Foam_Color: {r: 0.16037738, g: 0.15356891, b: 0.15356891, a: 1}
     - _Foam_Scale: {r: 1000, g: 1000, b: 0, a: 0}
     - _RefractionScale: {r: 3, g: 12, b: 0, a: 0}
     - _Refraction_Scale: {r: 140, g: 56, b: 0, a: 0}
@@ -206,7 +206,7 @@ Material:
     - _RippleScale: {r: 50, g: 200, b: 0, a: 0}
     - _Ripple_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ripple_Scale: {r: 1000, g: 1000, b: 0, a: 0}
-    - _Shallow_Color: {r: 0.6273585, g: 0.99631196, b: 1, a: 0.6862745}
+    - _Shallow_Color: {r: 0, g: 0, b: 0, a: 0.6862745}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SurfaceColor: {r: 0.47405657, g: 0.6287414, b: 0.6320754, a: 0.70980394}
     - _Surface_Color: {r: 0.3812745, g: 0.61567825, b: 0.6792453, a: 0.5254902}
