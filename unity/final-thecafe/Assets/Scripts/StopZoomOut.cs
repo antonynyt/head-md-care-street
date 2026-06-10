@@ -8,11 +8,12 @@ public class StopZoomOut : StateMachineBehaviour
 
     protected float cupFill = 0f;
 
+    float stateTime = 0f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Debug.Log("Entered StopZoomOut state. State info: " + stateInfo.ToString());
+        Debug.Log("Entered StopZoomOut state. State info: " + stateInfo.ToString());
 
         cupFill = animator.GetComponent<CameraController>().cupFilling.currentFill01;
         //Debug.Log($"Current cup fill level: {cupFill}");
@@ -25,8 +26,11 @@ public class StopZoomOut : StateMachineBehaviour
         //Debug.Log($"Animation duration for StopZoomOut state: {animationDuration} seconds");
         float targetTime = cupFill * animationDuration;
         float speedMultiplier = animationDuration * cupFill / zoomOutTime;
-        animator.speed = speedMultiplier;
+        // animator.speed = 0;
         //Debug.Log($"Calculated speed multiplier: {speedMultiplier} to reach cupFill {cupFill} at zoomOutTime {zoomOutTime} seconds");
+
+        stateTime = 0f;
+        animator.SetFloat("MotionTime", 0);
 
         // CustomYarnCommands.OnZoomOutCommand.AddListener(OnZoomOutCommandReceived);
     }
@@ -34,17 +38,45 @@ public class StopZoomOut : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // stop zooming out when moving time is more than fill progress
-        if (stateInfo.normalizedTime > cupFill && animator.speed > 0f)
+
+        stateTime += Time.deltaTime;
+
+        // Relative time is going from 0 to 1 during the the zoom out duration.
+        float relativeTime = stateTime / CustomYarnCommands.lastZoomOutTime;
+        if (relativeTime < 1)
         {
-            //Debug.Log($"Stopping zoom out at normalized time {stateInfo.normalizedTime} which is greater than cupFill {cupFill}");
-            animator.speed = 0f;
+            float easedTime = relativeTime;
+
+            // Apply an ease-out curve to the relative time (you can adjust the curve as needed)
+            //easedTime = 1 - Mathf.Pow(1 - relativeTime, 3); // Cubic ease-out
+
+            // ease out sine
+            //easedTime = Mathf.Sin(relativeTime * Mathf.PI * 0.5f); // Sine ease-out
+
+            // ease in out sine
+            easedTime = 0.5f * (1 - Mathf.Cos(relativeTime * Mathf.PI)); // Sine ease-in-out
+
+            // only play the part of the animation that corresponds to the current fill level of the cup.
+            float motionTime = easedTime * cupFill;
+
+            animator.SetFloat("MotionTime", motionTime);
+            
+            // Debug.Log($"Updating MotionTime to {motionTime} (normalized: {stateInfo.normalizedTime}) with cupFill {cupFill}");
         }
+
+
+        // stop zooming out when moving time is more than fill progress
+        // if (stateInfo.normalizedTime > cupFill && animator.speed > 0f)
+        // {
+        //     //Debug.Log($"Stopping zoom out at normalized time {stateInfo.normalizedTime} which is greater than cupFill {cupFill}");
+        //     animator.speed = 0f;
+        // }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.Log("Exiting StopZoomOut state. State info: " + stateInfo.ToString());
         // CustomYarnCommands.OnZoomOutCommand.RemoveListener(OnZoomOutCommandReceived);
     }
 
