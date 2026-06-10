@@ -1839,17 +1839,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CupInteractionDirector
   cup: {fileID: 2046057124}
   dialogueRunner: {fileID: 1743752782}
-  sequences:
-  - sequenceName: Day1
+  sequence:
+    sequenceName: 
     fillStepNodes:
-    - Day1_M_1
-    - Day1_M_2
-    - Day1_M_3
+    - 
+    - 
+    - 
     replyStepNodes:
-    - Day1_R_1
-    - Day1_R_2
-    - Day1_R_3
-  currentSequenceIndex: 0
+    - 
+    - 
+    - 
 --- !u!4 &1058369914
 Transform:
   m_ObjectHideFlags: 0
@@ -2658,7 +2657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4063417980050988, guid: 4ca04dc9501451e498e3f029e625ccaf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.13
+      value: 10.87
       objectReference: {fileID: 0}
     - target: {fileID: 4063417980050988, guid: 4ca04dc9501451e498e3f029e625ccaf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2666,7 +2665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4063417980050988, guid: 4ca04dc9501451e498e3f029e625ccaf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.56
+      value: 14.78
       objectReference: {fileID: 0}
     - target: {fileID: 4063417980050988, guid: 4ca04dc9501451e498e3f029e625ccaf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2702,7 +2701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198930946724180930, guid: 4ca04dc9501451e498e3f029e625ccaf, type: 3}
       propertyPath: simulationSpeed
-      value: 0.28
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 199552739069052956, guid: 4ca04dc9501451e498e3f029e625ccaf, type: 3}
       propertyPath: m_Materials.Array.size
@@ -3209,7 +3208,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5e0b38dea8abc0429ea0e7138baebe1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CupFillingShader
+  m_EditorClassIdentifier: Assembly-CSharp::CupFilling
 --- !u!1001 &2052637362
 PrefabInstance:
   m_ObjectHideFlags: 0
