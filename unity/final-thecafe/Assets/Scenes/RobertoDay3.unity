@@ -3853,8 +3853,8 @@ GameObject:
   - component: {fileID: 864385513}
   - component: {fileID: 864385512}
   - component: {fileID: 864385511}
-  - component: {fileID: 864385510}
   - component: {fileID: 864385509}
+  - component: {fileID: 864385515}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3927,28 +3927,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   cupFilling: {fileID: 1593733043}
   pressThreshold: 0.1
---- !u!95 &864385510
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 864385507}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b1256ca5f1d4432b89a0368794daafb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &864385511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4033,6 +4011,28 @@ Transform:
   - {fileID: 1050471374}
   m_Father: {fileID: 1194851904}
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+--- !u!95 &864385515
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864385507}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b1256ca5f1d4432b89a0368794daafb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &885146020 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7733339445370539989, guid: eae282ced33b74140b668fb902af6d44, type: 3}
