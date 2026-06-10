@@ -48,15 +48,13 @@ public class CupFilling : MonoBehaviour
             currentFill01 += fillSpeed * Time.deltaTime;
             if (currentFill01 >= 1f)
             {
-                currentFill01 = 1f;
+                // small bounce effect when reaching full fill
+                currentFill01 = 1.01f + Mathf.Sin(Time.time * 5f) * 0.01f;
             }
             ApplyFill();
             OnFillProgress.Invoke(currentFill01);
         }
-        else if (
-            // fillstep greather than 1 fast unfill, otherwise natural drain
-            CurrentStep < 1 
-        )
+        else if ( CurrentStep < 1 )
         {
             currentFill01 -= fillSpeed * Time.deltaTime;
             currentFill01 = Mathf.Clamp01(currentFill01);
