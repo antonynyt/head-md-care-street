@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/RobertoDay4.unity
     guid: e808148c1e75e4cb5aed809ae57e635b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/RobertoDay3.unity
     guid: 94789f1550596470bb6c4dd6652c3569
   - enabled: 0
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BikeScene.unity
     guid: 74934c2efcb879646ad3946686125027
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RobertoDay1.unity
     guid: 5f862720003a346218cf0decdbd03e0f
   m_configObjects:
