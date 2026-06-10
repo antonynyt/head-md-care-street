@@ -129,14 +129,12 @@ public class CupInteractionDirector : MonoBehaviour
 
     private IEnumerator RunReleaseSequence()
     {
-        int replyIndex = Mathf.Clamp(lastTriggeredStep, 0, 2);
+        if (sequence.replyStepNodes == null) { releaseRoutine = null; yield break; }
 
-        if (sequence.replyStepNodes != null && replyIndex < sequence.replyStepNodes.Length)
-        {
-            string replyNode = sequence.replyStepNodes[replyIndex];
-            if (!string.IsNullOrWhiteSpace(replyNode))
-                _ = dialogueRunner.StartDialogue(replyNode);
-        }
+        int replyIndex = Mathf.Clamp(lastTriggeredStep - 1, 0, sequence.replyStepNodes.Length - 1);
+        string replyNode = sequence.replyStepNodes[replyIndex];
+        if (!string.IsNullOrWhiteSpace(replyNode))
+            _ = dialogueRunner.StartDialogue(replyNode);
 
         releaseRoutine = null;
         yield break;
