@@ -13,18 +13,18 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private float brakeReturnDuration = 0.5f;
 
     [Header("Speed / Scene")]
-    [SerializeField] private float pressDurationToZero = 4f;
+    [SerializeField] private float pressDurationToZero = 3f;
     [SerializeField] private float speedTransitionRate = 4f;
     [SerializeField] private float sceneChangeThreshold = 4f;
-    [SerializeField] private string transitionScene = "Roberto";
+    [SerializeField] private string transitionScene = "RobertoDay1";
+
+    [Header("Animation")]
+    [SerializeField] private Animator brakeAnimator;
 
     [Header("Audio")]
     [SerializeField] private AudioClip brakeClip;
-   
-    [SerializeField] private float pedalFadeDuration = 0.4f;
-
-    [Header("UI")]
-    [SerializeField] private Image BrakeBar;
+    [SerializeField] private float brakeVolume = 3f;
+    [SerializeField] private float pedalFadeDuration = 3f;
 
     private AudioSource audioSource;
     private InfiniteStreet infiniteStreet;
@@ -64,6 +64,10 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         brakeAudioStarted = false;
         heldTime = 0f;
 
+        if (brakeAnimator != null)
+            brakeAnimator.SetBool("Brake", true);
+
+
         if (infiniteStreet != null)
             initialStreetSpeed = infiniteStreet.speed;
 
@@ -78,8 +82,13 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void EndPress()
     {
+        Debug.Log("EndPress called");
+        
         if (!isPressed) return;
         isPressed = false;
+
+        if (brakeAnimator != null)
+            brakeAnimator.SetBool("Brake", false); 
 
         if (pressRoutine != null)
         {
@@ -89,41 +98,34 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (audioSource.isPlaying) audioSource.Stop();
 
-        // Restore pedal sound
-        if (pedalAudioSource != null)
+        // if object still active 
+        if (gameObject.activeInHierarchy)
         {
-            pedalAudioSource.volume = 1f;
-            if (!pedalAudioSource.isPlaying) pedalAudioSource.Play();
+            // Restore pedal sound
+            if (pedalAudioSource != null)
+            {
+                pedalAudioSource.volume = 1f;
+                if (!pedalAudioSource.isPlaying) pedalAudioSource.Play();
+            }
+
+            if (infiniteStreet != null)
+                StartCoroutine(RestoreSpeedRoutine());
+
+            returnRoutine = StartCoroutine(ReturnBrakeRoutine());
         }
-
-        if (infiniteStreet != null)
-            StartCoroutine(RestoreSpeedRoutine());
-
-        returnRoutine = StartCoroutine(ReturnBrakeRoutine());
-        StartCoroutine(ReturnBarRoutine());
-
     }
 
-    private IEnumerator PressRoutine()
+        private IEnumerator PressRoutine()
     {
         while (isPressed)
         {
             heldTime += Time.deltaTime;
 
-            if (BrakeBar != null)
-                // change image rotation from x=90 degrees to x=0degrees based on heldTime / pressDurationToZero
-                BrakeBar.transform.localEulerAngles = new Vector3(
-                    Mathf.Lerp(90f, 0f, Mathf.Clamp01(heldTime / pressDurationToZero)),
-                    BrakeBar.transform.localEulerAngles.y,
-                    BrakeBar.transform.localEulerAngles.z
-                );
-
-            // Slow street proportionally
+            // Slow street directly to exact 0 at pressDurationToZero
             if (infiniteStreet != null)
             {
                 float holdFactor = Mathf.Clamp01(1f - (heldTime / pressDurationToZero));
-                float targetSpeed = initialStreetSpeed * holdFactor;
-                infiniteStreet.speed = Mathf.Lerp(infiniteStreet.speed, targetSpeed, Time.deltaTime * speedTransitionRate);
+                infiniteStreet.speed = initialStreetSpeed * holdFactor;
             }
 
             // Ramp brake rotation
@@ -135,13 +137,29 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 if (pedalFadeRoutine != null) StopCoroutine(pedalFadeRoutine);
                 pedalFadeRoutine = StartCoroutine(FadePedalOut());
-                audioSource.PlayOneShot(brakeClip);
+                audioSource.PlayOneShot(brakeClip, brakeVolume);
                 brakeAudioStarted = true;
             }
 
             if (heldTime >= sceneChangeThreshold)
             {
-                FadeManager.Instance.LoadScene(transitionScene);
+                // ensure speed is exactly 0
+                if (infiniteStreet != null) infiniteStreet.speed = 0f;
+
+                // ensure pedal is fully silent
+                if (pedalFadeRoutine != null) yield return pedalFadeRoutine;
+                if (pedalAudioSource != null)
+                {
+                    pedalAudioSource.volume = 0f;
+                    pedalAudioSource.Stop();
+                }
+
+                // now everything is still and silent — trigger fade to black
+                if (FadeManager.Instance != null)
+                    FadeManager.Instance.LoadScene(transitionScene);
+                else
+                    SceneManager.LoadScene(transitionScene);
+
                 yield break;
             }
 
@@ -184,39 +202,7 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         returnRoutine = null;
     }
 
-    // make a private IEnumerator ReturnBarRoutine() that rotates the brake bar back to 90 degrees over brakeReturnDuration seconds
-    private IEnumerator ReturnBarRoutine()
-    {
-        if (BrakeBar == null) yield break;
-
-        float duration = brakeReturnDuration;
-        float elapsed = 0f;
-
-        float startRotation = BrakeBar.transform.localEulerAngles.x;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
-
-            float x = Mathf.LerpAngle(startRotation, 90f, t);
-
-            BrakeBar.transform.localEulerAngles = new Vector3(
-                x,
-                BrakeBar.transform.localEulerAngles.y,
-                BrakeBar.transform.localEulerAngles.z
-            );
-
-            yield return null;
-        }
-
-        BrakeBar.transform.localEulerAngles = new Vector3(
-            90f,
-            BrakeBar.transform.localEulerAngles.y,
-            BrakeBar.transform.localEulerAngles.z
-        );
-    }
-
+    
     private IEnumerator FadePedalOut()
     {
         if (pedalAudioSource == null) yield break;
