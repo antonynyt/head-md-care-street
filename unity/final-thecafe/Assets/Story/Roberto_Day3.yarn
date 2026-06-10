@@ -17,14 +17,16 @@ title: Day3_R_1
 ---
 <<ZoomOut 3.2>>
 Roberto: C'est un dictionnaire de sanskrit. #line:d3_r1
+<<change_scene BikeScene>>
 ===
 
 title: Day3_R_2
 ---
-<<ZoomOut 3.2>>
+<<ZoomOut 18>>
 Roberto: Namaste ! C'est un dictionnaire de sanskrit que j'ai eu à la bibliothèque. #line:d3_r2a
 Roberto: Après le grec ancien, l'arabe et le chinois, ma nouvelle passion c'est le sanskrit. #line:d3_r2b
 Roberto: C'est assez complexe, mais j'adore ! #line:d3_r2c
+<<change_scene BikeScene>>
 ===
 
 title: Day3_R_3
