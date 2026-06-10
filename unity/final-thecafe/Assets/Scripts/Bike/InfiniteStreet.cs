@@ -40,7 +40,7 @@ public class InfiniteStreet : MonoBehaviour
 
     void CheckStreet(GameObject street, GameObject other)
     {
-        if (street.transform.position.x <= -200f)
+        if (street.transform.position.x <= -250.0f) // when street goes off-screen to the left
         {
             // Reposition absolutely relative to the other segment — no drift
             float newX = other.transform.position.x + streetLength;
