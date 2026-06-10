@@ -47,4 +47,5 @@ Roberto: C'est assez complexe, mais j'adore apprendre des langues. #line:d3_r3c_
 <<endif>>
 
 Roberto: À la prochaine ! #line:d3_r3_end
+<<change_scene BikeScene>>
 ===

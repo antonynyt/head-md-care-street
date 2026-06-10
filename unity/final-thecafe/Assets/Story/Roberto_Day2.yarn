@@ -17,6 +17,7 @@ title: Day2_R_1
 ---
 <<ZoomOut 3.2>>
 Roberto: Oui c'est vrai. L'hiver est déjà là. #line:d2_r1
+<<change_scene RobertoDay3>>
 ===
 
 title: Day2_R_2
@@ -24,6 +25,7 @@ title: Day2_R_2
 <<ZoomOut 5.8>>
 Roberto: Tu sais que je ne dis jamais non à un café ! #line:d2_r2a
 Roberto: Surtout qu'il fait froid. #line:d2_r2b
+<<change_scene RobertoDay3>>
 ===
 
 title: Day2_R_3
@@ -46,5 +48,6 @@ Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3e_lo
 Roberto: A bientôt!
 
 <<set $day2_fill to 3>>
+<<change_scene RobertoDay3>>
 ===
 
