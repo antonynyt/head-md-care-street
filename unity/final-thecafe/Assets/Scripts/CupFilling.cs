@@ -53,7 +53,16 @@ public class CupFilling : MonoBehaviour
             ApplyFill();
             OnFillProgress.Invoke(currentFill01);
         }
-        else
+        else if (
+            // fillstep greather than 1 fast unfill, otherwise natural drain
+            CurrentStep < 1 
+        )
+        {
+            currentFill01 -= fillSpeed * Time.deltaTime;
+            currentFill01 = Mathf.Clamp01(currentFill01);
+            ApplyFill();
+            OnFillProgress.Invoke(currentFill01);
+        } else
         {
             // Drain at a constant speed that was set when emptying began
             currentFill01 -= currentEmptySpeed * Time.deltaTime;
@@ -129,7 +138,7 @@ public class CupFilling : MonoBehaviour
 
     private IEnumerator JiggleRoutine()
     {
-        float jiggleAmount = 0.1f;
+        float jiggleAmount = 0.05f;
         float jiggleDuration = 0.5f;
 
         float elapsed = 0f;

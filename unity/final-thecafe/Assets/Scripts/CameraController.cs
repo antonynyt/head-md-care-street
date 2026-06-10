@@ -1,23 +1,45 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
 
 public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
-    public CupFilling cupFilling; // drag reference in Inspector
-    bool released = false;
+    public CupFilling cupFilling;
 
     public float pressThreshold = 0.5f;
 
-    private bool isPressing;
-    private bool longPressTriggered;
+    private bool released = false;
+    private bool isPressing = false;
+    private bool longPressTriggered = false;
+    private bool zoomInFired = false;
     private Coroutine pressCoroutine;
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        if (!isPressing || released || zoomInFired) return;
+
+        // Step 1 crossed — deactivate Pressed, fire ZoomIn once
+        if (cupFilling != null && cupFilling.CurrentStep >= 1)
+        {
+            animator.SetBool("Pressed", false);
+            animator.SetTrigger("ZoomIn");
+            zoomInFired = true;
+        }
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (released) return;
+
         isPressing = true;
         longPressTriggered = false;
+        zoomInFired = false;
 
         pressCoroutine = StartCoroutine(CheckLongPress());
     }
@@ -25,31 +47,29 @@ public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHa
     public void OnPointerUp(PointerEventData eventData)
     {
         isPressing = false;
+        animator.SetBool("Pressed", false);
 
         if (pressCoroutine != null)
             StopCoroutine(pressCoroutine);
 
         if (!longPressTriggered)
         {
-            Debug.Log("Tap");
-
-            // jiggle the cup
+            // Tap — jiggle hint
             if (cupFilling != null)
-            {
                 cupFilling.JiggleCup();
-            }
-
         }
         else
         {
-            Debug.Log("Press End");
-
-            // end filling
-            if (cupFilling != null) 
+            if (cupFilling != null)
             {
-                GetComponent<Animator>().SetTrigger("ZoomOut");
                 cupFilling.EndFill();
-                released = true;
+
+                if (cupFilling.CurrentStep >= 1)
+                {
+                    animator.SetTrigger("ZoomOut");
+                    released = true;
+                }
+                // else: drain naturally, can try again
             }
         }
     }
@@ -58,43 +78,13 @@ public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHa
     {
         yield return new WaitForSeconds(pressThreshold);
 
-        if (isPressing)
+        if (isPressing && !released)
         {
             longPressTriggered = true;
-            
-            //start filling
-            if (cupFilling != null && released == false)
-            {
-                GetComponent<Animator>().SetTrigger("ZoomIn");
+            animator.SetBool("Pressed", true);
+
+            if (cupFilling != null)
                 cupFilling.BeginFill();
-            }
         }
     }
-    
-
-
-    // public CupFilling cupFilling; // drag reference in Inspector
-
-
-    // public void OnPointerDown(PointerEventData eventData)
-    // {
-
-    //     // if it's just a tap don't fill (tap is 0.5s or less)
-        
-    //     if (cupFilling != null && released == false && eventData.clickTime > 0.5f)
-    //     {
-    //         GetComponent<Animator>().SetTrigger("ZoomIn");
-    //         cupFilling.BeginFill();
-    //     }
-    // }
-
-    // public void OnPointerUp(PointerEventData eventData)
-    // {
-    //     if (cupFilling != null && eventData.clickTime > 0.5f) 
-    //     {
-    //         GetComponent<Animator>().SetTrigger("ZoomOut");
-    //         cupFilling.EndFill();
-    //         released = true;
-    //     }
-    // }
 }

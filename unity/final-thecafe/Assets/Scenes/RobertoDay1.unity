@@ -1191,7 +1191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 532338356}
   m_Layer: 0
-  m_Name: Setup
+  m_Name: Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4450,6 +4450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   cupFilling: {fileID: 1795868460}
+  pressThreshold: 0.1
 --- !u!95 &2085885494
 Animator:
   serializedVersion: 7

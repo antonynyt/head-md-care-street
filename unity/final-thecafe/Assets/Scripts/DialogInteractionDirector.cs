@@ -79,7 +79,7 @@ public class CupInteractionDirector : MonoBehaviour
         waitingForRelease = false;
         lastTriggeredStep = 0;
 
-        PlayFillStep(0);
+        // PlayFillStep(1);
     }
 
     private void HandleFillProgress(float fill01)
@@ -98,6 +98,13 @@ public class CupInteractionDirector : MonoBehaviour
     {
         if (sequence == null || waitingForRelease) return;
 
+        // Released before step 1 — drain naturally, no dialog, no lock
+        if (lastTriggeredStep == 0)
+        {
+            isPressing = false;
+            return;
+        }
+
         isPressing = false;
         waitingForRelease = true;
 
@@ -110,9 +117,12 @@ public class CupInteractionDirector : MonoBehaviour
     private void PlayFillStep(int stepNumber)
     {
         if (sequence.fillStepNodes == null) return;
-        if (stepNumber < 0 || stepNumber >= sequence.fillStepNodes.Length) return;
+        
+        int index = stepNumber - 1; // step 1 = index 0, step 2 = index 1, etc.
+        
+        if (index < 0 || index >= sequence.fillStepNodes.Length) return;
 
-        string node = sequence.fillStepNodes[stepNumber];
+        string node = sequence.fillStepNodes[index];
         if (!string.IsNullOrWhiteSpace(node))
             _ = dialogueRunner.StartDialogue(node);
     }
