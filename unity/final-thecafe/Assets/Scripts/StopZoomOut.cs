@@ -6,33 +6,20 @@ public class StopZoomOut : StateMachineBehaviour
 
     DialogueRunner dialogRunner;
 
-    protected float cupFill = 0f;
+    private float cupFill = 0f;
 
-    float stateTime = 0f;
+    private float stateTime = 0f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("Entered StopZoomOut state. State info: " + stateInfo.ToString());
+        //Debug.Log("Entered StopZoomOut state. State info: " + stateInfo.ToString());
 
         cupFill = animator.GetComponent<CameraController>().cupFilling.currentFill01;
         //Debug.Log($"Current cup fill level: {cupFill}");
 
-        float zoomOutTime = CustomYarnCommands.lastZoomOutTime;
-        //Debug.Log($"ZoomOut time from CustomYarnCommands: {zoomOutTime} seconds");
-
-        // Calculate the state speed multiplier so that after zoomOutTime seconds, the animation time will be cupFill * animation duration
-        float animationDuration = stateInfo.length;
-        //Debug.Log($"Animation duration for StopZoomOut state: {animationDuration} seconds");
-        float targetTime = cupFill * animationDuration;
-        float speedMultiplier = animationDuration * cupFill / zoomOutTime;
-        // animator.speed = 0;
-        //Debug.Log($"Calculated speed multiplier: {speedMultiplier} to reach cupFill {cupFill} at zoomOutTime {zoomOutTime} seconds");
-
         stateTime = 0f;
         animator.SetFloat("MotionTime", 0);
-
-        // CustomYarnCommands.OnZoomOutCommand.AddListener(OnZoomOutCommandReceived);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -47,14 +34,14 @@ public class StopZoomOut : StateMachineBehaviour
         {
             float easedTime = relativeTime;
 
-            // Apply an ease-out curve to the relative time (you can adjust the curve as needed)
-            //easedTime = 1 - Mathf.Pow(1 - relativeTime, 3); // Cubic ease-out
+            // Cubic ease-out
+            //easedTime = 1 - Mathf.Pow(1 - relativeTime, 3);
 
-            // ease out sine
-            //easedTime = Mathf.Sin(relativeTime * Mathf.PI * 0.5f); // Sine ease-out
+            // Sine ease-out
+            //easedTime = Mathf.Sin(relativeTime * Mathf.PI * 0.5f);
 
-            // ease in out sine
-            easedTime = 0.5f * (1 - Mathf.Cos(relativeTime * Mathf.PI)); // Sine ease-in-out
+            // Sine ease-in-out
+            easedTime = 0.5f * (1 - Mathf.Cos(relativeTime * Mathf.PI));
 
             // only play the part of the animation that corresponds to the current fill level of the cup.
             float motionTime = easedTime * cupFill;
@@ -67,14 +54,6 @@ public class StopZoomOut : StateMachineBehaviour
         {
             CupInteractionDirector.Instance.OnCupZoomOutDone();
         }
-
-
-        // stop zooming out when moving time is more than fill progress
-        // if (stateInfo.normalizedTime > cupFill && animator.speed > 0f)
-        // {
-        //     //Debug.Log($"Stopping zoom out at normalized time {stateInfo.normalizedTime} which is greater than cupFill {cupFill}");
-        //     animator.speed = 0f;
-        // }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -95,12 +74,5 @@ public class StopZoomOut : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
-
-    // private void OnZoomOutCommandReceived(float zoomOutTime)
-    // {
-    //     Debug.Log($"Received ZoomOut command with time: {zoomOutTime} on StopZoomOut state");
-    //     // You can implement additional logic here if needed when the command is received
-    // }
-
 
 }
