@@ -13,10 +13,9 @@ public class DialogueDirectorBike : MonoBehaviour
     [SerializeField] private DialogueRunner dialogueRunner;
     [SerializeField] private float delayBetweenLoops = 7f;
     [SerializeField] private BikeSequence sequence;
-
     [SerializeField] private BikeBrake bikeBrake;
-    [SerializeField] private float brakeStopThreshold = 3f;
-    private bool stopped = false;
+
+    private bool wasBraking = false;
 
     public static int CurrentDay { get; private set; } = 0;
     private string _currentNode;
@@ -24,7 +23,6 @@ public class DialogueDirectorBike : MonoBehaviour
     private void Awake()
     {
         CurrentDay = (CurrentDay) % (sequence.daysYarnNodes.Length) + 1;
-        Debug.Log($"{sequence.daysYarnNodes.Length}");
         _currentNode = sequence.daysYarnNodes[CurrentDay - 1];
 
         Debug.Log($"CurrentDay: {CurrentDay}, Node: {_currentNode}");
@@ -35,26 +33,33 @@ public class DialogueDirectorBike : MonoBehaviour
 
     private void Update()
     {
-        if (stopped || bikeBrake == null) return;
-
-        // Stop dialogue when brake held 3s OR speed has fully zeroed out
-        if (bikeBrake.HeldTime >= brakeStopThreshold || bikeBrake.HasReachedZeroSpeed)
+        if (bikeBrake != null && bikeBrake.IsPressed)
         {
-            stopped = true;
-            StopAllCoroutines();
-            if (dialogueRunner.IsDialogueRunning)
-                dialogueRunner.Stop();
+            wasBraking = true;
+        }
+        else if (wasBraking && !(bikeBrake != null && bikeBrake.HasReachedZeroSpeed))
+        {
+            wasBraking = false;
+            StartCoroutine(PlayLinesInOrder());
         }
     }
 
     private IEnumerator PlayLinesInOrder()
     {
         yield return new WaitForSeconds(delayBetweenLoops);
+        if (bikeBrake != null && bikeBrake.IsPressed)
+        {
+            yield break;
+        }
         dialogueRunner.StartDialogue(_currentNode);
     }
 
     private void OnDialogueComplete()
     {
+        if (bikeBrake != null && bikeBrake.IsPressed)
+        {
+            return;
+        }
         StartCoroutine(PlayLinesInOrder());
     }
 
