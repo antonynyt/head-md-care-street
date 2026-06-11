@@ -14,6 +14,10 @@ public class DialogueDirectorBike : MonoBehaviour
     [SerializeField] private float delayBetweenLoops = 7f;
     [SerializeField] private BikeSequence sequence;
 
+    [SerializeField] private BikeBrake bikeBrake;
+    [SerializeField] private float brakeStopThreshold = 3f;
+    private bool stopped = false;
+
     public static int CurrentDay { get; private set; } = 0;
     private string _currentNode;
 
