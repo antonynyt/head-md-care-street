@@ -20,25 +20,23 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [Header("Audio")]
     [SerializeField] private AudioClip brakeClip;
-    [SerializeField] private AudioClip pedalClip;
     [SerializeField] private float brakeVolume = 1f;
-    [SerializeField] private float pedalFadeDuration = 0.8f;
 
     private const float SpeedTransitionRate = 4f;
 
     private AudioSource brakeAudioSource;
-    private AudioSource pedalAudioSource;
     private InfiniteStreet infiniteStreet;
     private Vector3 initialLocalEuler;
     private float initialStreetSpeed;
     private float heldTime;
-    private bool isPressed;
-    private bool hasReachedZeroSpeed;
-    private bool sceneChangeTriggered;
+
+    // Public state read by PedalSound
+    public bool IsPressed       { get; private set; }
+    public bool HasReachedZeroSpeed { get; private set; }
+    public bool SceneChangeTriggered { get; private set; }
 
     private Coroutine pressRoutine;
     private Coroutine returnRoutine;
-    private Coroutine pedalFadeRoutine;
     private Coroutine restoreSpeedRoutine;
     private Coroutine sceneChangeRoutine;
 
@@ -47,30 +45,13 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         infiniteStreet = FindFirstObjectByType<InfiniteStreet>();
         initialLocalEuler = transform.localEulerAngles;
 
-        // Brake sound — the AudioSource already on this GameObject
         brakeAudioSource = GetComponent<AudioSource>();
         if (brakeAudioSource == null) brakeAudioSource = gameObject.AddComponent<AudioSource>();
         brakeAudioSource.spatialBlend = 0f;
         brakeAudioSource.volume = 1f;
 
-        // Pedal sound — a second AudioSource added at runtime
-        pedalAudioSource = gameObject.AddComponent<AudioSource>();
-        pedalAudioSource.spatialBlend = 0f;
-        pedalAudioSource.loop = true;
-        pedalAudioSource.volume = 1f;
-        if (pedalClip != null)
-        {
-            pedalAudioSource.clip = pedalClip;
-            pedalAudioSource.Play();
-        }
-
         if (infiniteStreet != null)
             initialStreetSpeed = infiniteStreet.speed;
-    }
-
-    private void Start()
-    {
-        Debug.Log("[BikeBrake] pedalAudioSource in Start: " + (pedalAudioSource != null ? pedalAudioSource.gameObject.name : "NULL"));
     }
 
     public void OnPointerDown(PointerEventData eventData) => StartPress();
@@ -79,14 +60,14 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void StartPress()
     {
-        if (isPressed || sceneChangeTriggered) return;
-        isPressed = true;
+        if (IsPressed || SceneChangeTriggered) return;
+        IsPressed = true;
         heldTime = 0f;
 
         if (brakeAnimator != null)
             brakeAnimator.SetBool("Brake", true);
 
-        if (!hasReachedZeroSpeed && infiniteStreet != null)
+        if (!HasReachedZeroSpeed && infiniteStreet != null)
             initialStreetSpeed = infiniteStreet.speed;
 
         if (restoreSpeedRoutine != null)
@@ -101,27 +82,21 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             returnRoutine = null;
         }
 
-        // Play brake sound immediately — no fade in
         if (brakeClip != null)
         {
             brakeAudioSource.Stop();
             brakeAudioSource.PlayOneShot(brakeClip, brakeVolume);
         }
 
-        // Fade pedal out immediately
-        Debug.Log("[BikeBrake] StartPress — pedalAudioSource: " + (pedalAudioSource != null ? pedalAudioSource.gameObject.name : "NULL"));
-        if (pedalFadeRoutine != null) StopCoroutine(pedalFadeRoutine);
-        pedalFadeRoutine = StartCoroutine(FadePedalOut());
-
         pressRoutine = StartCoroutine(PressRoutine());
     }
 
     private void EndPress()
     {
-        if (!isPressed) return;
-        isPressed = false;
+        if (!IsPressed) return;
+        IsPressed = false;
 
-        if (brakeAnimator != null && !hasReachedZeroSpeed)
+        if (brakeAnimator != null && !HasReachedZeroSpeed)
             brakeAnimator.SetBool("Brake", false);
 
         if (pressRoutine != null)
@@ -134,28 +109,14 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (!gameObject.activeInHierarchy) return;
 
-        if (hasReachedZeroSpeed)
+        if (HasReachedZeroSpeed)
         {
-            // Speed stays 0, pedal stays silent, scene change already scheduled
             if (infiniteStreet != null) infiniteStreet.speed = 0f;
             returnRoutine = StartCoroutine(ReturnBrakeRoutine());
             return;
         }
 
-        // Early release — restore pedal and speed
-        if (pedalFadeRoutine != null)
-        {
-            StopCoroutine(pedalFadeRoutine);
-            pedalFadeRoutine = null;
-        }
-
-        Debug.Log("[BikeBrake] Early release — restoring pedal");
-        if (pedalAudioSource != null)
-        {
-            pedalAudioSource.volume = 1f;
-            if (!pedalAudioSource.isPlaying) pedalAudioSource.Play();
-        }
-
+        // Early release — restore speed
         if (infiniteStreet != null)
             restoreSpeedRoutine = StartCoroutine(RestoreSpeedRoutine());
 
@@ -164,13 +125,13 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private IEnumerator PressRoutine()
     {
-        while (isPressed)
+        while (IsPressed)
         {
             heldTime += Time.deltaTime;
 
             if (infiniteStreet != null)
             {
-                if (hasReachedZeroSpeed)
+                if (HasReachedZeroSpeed)
                 {
                     infiniteStreet.speed = 0f;
                 }
@@ -178,19 +139,18 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 {
                     float holdFactor = Mathf.Clamp01(1f - (heldTime / pressDurationToZero));
                     infiniteStreet.speed = initialStreetSpeed * holdFactor;
-                if (holdFactor <= 0f)
-                {
-                    infiniteStreet.speed = 0f;
-                    hasReachedZeroSpeed = true;
 
-                    // Let SceneChangeRoutine handle the fade
-                    if (sceneChangeRoutine == null)
-                        sceneChangeRoutine = StartCoroutine(SceneChangeRoutine());
-                }
+                    if (holdFactor <= 0f)
+                    {
+                        infiniteStreet.speed = 0f;
+                        HasReachedZeroSpeed = true;
+
+                        if (sceneChangeRoutine == null)
+                            sceneChangeRoutine = StartCoroutine(SceneChangeRoutine());
+                    }
                 }
             }
 
-            // Ramp brake lever rotation
             float rampT = Mathf.Clamp01(heldTime / brakeRotationDuration);
             transform.localEulerAngles = initialLocalEuler + new Vector3(0f, rampT * brakeRotationAmount, 0f);
 
@@ -198,28 +158,18 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
-private IEnumerator SceneChangeRoutine()
-{
-    Debug.Log("[BikeBrake] SceneChangeRoutine started — loading scene: " + transitionScene);
-    sceneChangeTriggered = true;
-
-    // Ensure pedal fades completely before scene transition
-    if (pedalAudioSource != null && pedalAudioSource.isPlaying)
+    private IEnumerator SceneChangeRoutine()
     {
-        if (pedalFadeRoutine != null)
-            StopCoroutine(pedalFadeRoutine);
+        SceneChangeTriggered = true;
+        yield return new WaitForSeconds(2f);
 
-        yield return StartCoroutine(FadePedalOut());
+        StopAllCoroutines();
+
+        if (FadeManager.Instance != null)
+            FadeManager.Instance.LoadScene(transitionScene);
+        else
+            SceneManager.LoadScene(transitionScene);
     }
-
-    // Optional pause after fade
-    yield return new WaitForSeconds(2f);
-
-    if (FadeManager.Instance != null)
-        FadeManager.Instance.LoadScene(transitionScene);
-    else
-        SceneManager.LoadScene(transitionScene);
-}
 
     private IEnumerator RestoreSpeedRoutine()
     {
@@ -257,34 +207,6 @@ private IEnumerator SceneChangeRoutine()
         returnRoutine = null;
     }
 
-    private IEnumerator FadePedalOut()
-    {
-        if (pedalAudioSource == null)
-            yield break;
-
-        float startVolume = pedalAudioSource.volume;
-        float elapsed = 0f;
-
-        while (elapsed < pedalFadeDuration)
-        {
-            if (pedalAudioSource == null)
-                yield break;
-
-            elapsed += Time.deltaTime;
-
-            pedalAudioSource.volume =
-                Mathf.Lerp(startVolume, 0f, elapsed / pedalFadeDuration);
-
-            Debug.Log("Pedal volume = " + pedalAudioSource.volume);
-
-            yield return null;
-        }
-
-        pedalAudioSource.volume = 0f;
-        pedalAudioSource.Stop();
-
-        pedalFadeRoutine = null;
-    }
     public float GetCurrentWheelSpeed()
     {
         return infiniteStreet != null ? infiniteStreet.speed * 10f : 0f;
