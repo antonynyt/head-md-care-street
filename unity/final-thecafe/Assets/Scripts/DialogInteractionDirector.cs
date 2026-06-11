@@ -21,6 +21,7 @@ public class CupInteractionDirector : MonoBehaviour
     [Header("References")]
     [SerializeField] private CupFilling cup;
     [SerializeField] private DialogueRunner dialogueRunner;
+    [SerializeField] private float SceneChangeWaitTime = 5f;
 
     [Header("Sequence Data")]
     [SerializeField] private CupSequence sequence;
@@ -160,7 +161,14 @@ public class CupInteractionDirector : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void OnCupZoomOutDone() { 
+    public void OnCupZoomOutDone()
+    {
+        StartCoroutine(LoadSceneAfterDelay());
+    }
+
+    private IEnumerator LoadSceneAfterDelay()
+    {
+        yield return new WaitForSeconds(SceneChangeWaitTime);
         SceneManager.LoadScene("BikeScene");
     }
 
