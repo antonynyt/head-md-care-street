@@ -106,3 +106,5 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ss]ceneDependencyCache*
 
 /ProjectSettings/Packages/dev.yarnspinner/Assembly-CSharp-generated.ysls.json
+
+/.vscode/
