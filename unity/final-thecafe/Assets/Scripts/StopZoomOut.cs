@@ -60,8 +60,12 @@ public class StopZoomOut : StateMachineBehaviour
             float motionTime = easedTime * cupFill;
 
             animator.SetFloat("MotionTime", motionTime);
-            
+
             // Debug.Log($"Updating MotionTime to {motionTime} (normalized: {stateInfo.normalizedTime}) with cupFill {cupFill}");
+        }
+        else
+        {
+            CupInteractionDirector.Instance.OnCupZoomOutDone();
         }
 
 

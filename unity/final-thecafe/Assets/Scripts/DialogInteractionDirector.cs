@@ -159,4 +159,9 @@ public class CupInteractionDirector : MonoBehaviour
         dialogueRunner.SaveStateToPersistentStorage("roberto_save");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void OnCupZoomOutDone() { 
+        SceneManager.LoadScene("BikeScene");
+    }
+
 }

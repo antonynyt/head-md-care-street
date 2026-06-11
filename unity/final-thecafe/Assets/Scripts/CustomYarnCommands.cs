@@ -26,14 +26,4 @@ public class CustomYarnCommands : MonoBehaviour
 
         OnZoomOutCommand.Invoke(zoomOutTime);
     }
-
-    [YarnCommand("change_scene")]
-    public static void LoadScene(string sceneName)
-    {
-        // Sauvegarder avant de quitter la scène
-        if (CupInteractionDirector.Instance != null)
-            CupInteractionDirector.Instance.SaveState();
-        
-        SceneManager.LoadScene(sceneName);
-    }
 }
