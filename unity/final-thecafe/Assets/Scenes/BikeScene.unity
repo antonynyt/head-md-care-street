@@ -2934,9 +2934,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   dialogueRunner: {fileID: 367477508}
-  delayBetweenLines: 7
-  bikeBrake: {fileID: 1915230013}
-  brakeStopThreshold: 3
+  delayBetweenLoops: 7
+  sequence:
+    daysYarnNodes:
+    - Day1
+    - Day2
+    - Day3
+    - Day4
 --- !u!4 &555554218 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 034f17c9958e75b4fb683477d53475be, type: 3}

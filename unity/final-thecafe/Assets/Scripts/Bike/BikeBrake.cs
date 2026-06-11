@@ -13,7 +13,9 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [Header("Speed / Scene")]
     [SerializeField] private float pressDurationToZero = 3f;
-    [SerializeField] private string transitionScene = "RobertoDay1";
+    [SerializeField] private float speedTransitionRate = 4f;
+    [SerializeField] private float sceneChangeThreshold = 4f;
+    [SerializeField] private string transitionScene = $"RobertoDay{DialogueDirectorBike.CurrentDay}";
 
     [Header("Animation")]
     [SerializeField] private Animator brakeAnimator;
@@ -40,6 +42,11 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Coroutine restoreSpeedRoutine;
     private Coroutine sceneChangeRoutine;
     public float HeldTime => heldTime;
+
+    private void Start()
+    {
+        transitionScene = $"RobertoDay{DialogueDirectorBike.CurrentDay}";
+    }
 
     private void Awake()
     {

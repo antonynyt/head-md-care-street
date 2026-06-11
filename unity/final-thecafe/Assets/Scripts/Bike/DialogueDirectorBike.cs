@@ -4,16 +4,28 @@ using Yarn.Unity;
 
 public class DialogueDirectorBike : MonoBehaviour
 {
-    [SerializeField] private DialogueRunner dialogueRunner;
-    [SerializeField] private float delayBetweenLines = 7f;
-    [SerializeField] private BikeBrake bikeBrake;
-    [SerializeField] private float brakeStopThreshold = 3f;
-
-    private string[] nodes = { "Bike_1", "Bike_2", "Bike_3" };
-    private bool stopped = false;
-
-    private void Start()
+    [System.Serializable]
+    public class BikeSequence
     {
+        public string[] daysYarnNodes = new string[3];
+    }
+
+    [SerializeField] private DialogueRunner dialogueRunner;
+    [SerializeField] private float delayBetweenLoops = 7f;
+    [SerializeField] private BikeSequence sequence;
+
+    public static int CurrentDay { get; private set; } = 0;
+    private string _currentNode;
+
+    private void Awake()
+    {
+        CurrentDay = (CurrentDay) % (sequence.daysYarnNodes.Length) + 1;
+        Debug.Log($"{sequence.daysYarnNodes.Length}");
+        _currentNode = sequence.daysYarnNodes[CurrentDay - 1];
+
+        Debug.Log($"CurrentDay: {CurrentDay}, Node: {_currentNode}");
+
+        dialogueRunner.onDialogueComplete.AddListener(OnDialogueComplete);
         StartCoroutine(PlayLinesInOrder());
     }
 
@@ -33,13 +45,17 @@ public class DialogueDirectorBike : MonoBehaviour
 
     private IEnumerator PlayLinesInOrder()
     {
-        int index = 0;
-        while (true)
-        {
-            yield return new WaitForSeconds(delayBetweenLines);
-            dialogueRunner.StartDialogue(nodes[index]);
-            yield return new WaitUntil(() => !dialogueRunner.IsDialogueRunning);
-            index = (index + 1) % nodes.Length;
-        }
+        yield return new WaitForSeconds(delayBetweenLoops);
+        dialogueRunner.StartDialogue(_currentNode);
+    }
+
+    private void OnDialogueComplete()
+    {
+        StartCoroutine(PlayLinesInOrder());
+    }
+
+    private void OnDestroy()
+    {
+        dialogueRunner.onDialogueComplete.RemoveListener(OnDialogueComplete);
     }
 }

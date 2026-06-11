@@ -18,7 +18,6 @@ title: Day1_R_1
 <<ZoomOut 3.8>>
 Roberto: Bonsoir. #line:d1_r1
 <<set $day1_fill to 1>>
-<<change_scene RobertoDay2>>
 ===
 
 title: Day1_R_2
@@ -27,7 +26,6 @@ title: Day1_R_2
 Roberto: Bonsoir. #line:d1_r2a
 Roberto: Un café volontier. J'aime pas le thé. #line:d1_r2b
 <<set $day1_fill to 2>>
-<<change_scene RobertoDay2>>
 ===
 
 title: Day1_R_3
@@ -40,5 +38,4 @@ Roberto: Finalement, je suis bien ici, sous mon grand arbre. #line:d1_r3e
 Roberto: C'est un peu comme une grande chambre. #line:d1_r3f
 Roberto: Tant qu'il y a un toit au-dessus de la tête, je me sens en sécurité. #line:d1_r3g
 <<set $day1_fill to 3>>
-<<change_scene RobertoDay2>>
 ===
