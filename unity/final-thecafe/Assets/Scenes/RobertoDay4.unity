@@ -979,6 +979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   cupFilling: {fileID: 1835720001}
+  pressThreshold: 0.5
 --- !u!95 &498721059
 Animator:
   serializedVersion: 7
@@ -2330,6 +2331,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 113624273}
     m_Modifications:
+    - target: {fileID: 7340364730347681141, guid: b295d71c869e24c8aacaa6e4321c1926, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340364730347681141, guid: b295d71c869e24c8aacaa6e4321c1926, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 7.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340364730347681141, guid: b295d71c869e24c8aacaa6e4321c1926, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2958262985454349539, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -2533,18 +2546,6 @@ PrefabInstance:
     - target: {fileID: 7985477256237130417, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7340364730347681141, guid: b295d71c869e24c8aacaa6e4321c1926, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7340364730347681141, guid: b295d71c869e24c8aacaa6e4321c1926, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 7.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 7340364730347681141, guid: b295d71c869e24c8aacaa6e4321c1926, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7985477256237130417, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -4769,15 +4770,15 @@ MonoBehaviour:
   cup: {fileID: 1835720001}
   dialogueRunner: {fileID: 1020848256}
   sequence:
-    sequenceName: Day2
+    sequenceName: Day4
     fillStepNodes:
-    - Day2_M_1
-    - Day2_M_2
-    - Day2_M_3
+    - Day4_M_1
+    - Day4_M_2
+    - Day4_M_3
     replyStepNodes:
-    - Day2_R_1
-    - Day2_R_2
-    - Day2_R_3
+    - Day4_R_1
+    - Day4_R_2
+    - Day4_R_3
 --- !u!1001 &2109268793
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,12 +5,12 @@ Bonsoir Roberto. #line:d1_m1
 
 title: Day1_M_2
 ---
-Est-ce que tu veux un café ? #line:d1_m2
+Est-ce que tu veux un café ou un thé ? #line:d1_m2
 ===
 
 title: Day1_M_3
 ---
-Tu as l'air bien placé ici. #line:d1_m3
+Tu as l'air bien ici. #line:d1_m3
 ===
 
 title: Day1_R_1
@@ -25,7 +25,7 @@ title: Day1_R_2
 ---
 <<ZoomOut 4.8>>
 Roberto: Bonsoir. #line:d1_r2a
-Roberto: Merci pour le café. #line:d1_r2b
+Roberto: Un café volontier. J'aime pas le thé. #line:d1_r2b
 <<set $day1_fill to 2>>
 <<change_scene RobertoDay2>>
 ===
@@ -34,7 +34,7 @@ title: Day1_R_3
 ---
 <<ZoomOut 30>>
 Roberto: Bonsoir. #line:d1_r3a
-Roberto: Merci pour le café. #line:d1_r3b
+Roberto: Merci, un café. Je préfère. #line:d1_r3b
 Roberto: On m'a raconté qu'il y avait beaucoup de vols dans les abris. #line:d1_r3d
 Roberto: Finalement, je suis bien ici, sous mon grand arbre. #line:d1_r3e
 Roberto: C'est un peu comme une grande chambre. #line:d1_r3f
