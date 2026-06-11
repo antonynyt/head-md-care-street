@@ -39,6 +39,7 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Coroutine returnRoutine;
     private Coroutine restoreSpeedRoutine;
     private Coroutine sceneChangeRoutine;
+    public float HeldTime => heldTime;
 
     private void Awake()
     {
