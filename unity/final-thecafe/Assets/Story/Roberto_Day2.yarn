@@ -39,7 +39,8 @@ Roberto: Je dors toujours assis parce que j'ai peur qu'on me vole mes affaires. 
 Roberto: Il faisait tellement froid que je devais me réveiller plusieurs fois par nuit pour courir et me réchauffer. #line:d2_r3g_hi
 Roberto: ça me faisait faire un peu de sport. #line:d2_r3h_hi
 <<else>>
-Roberto: L'année passée, il faisait très froid. #line:d2_r3d_lo
+Roberto: L'année passée, il faisait très froid. Un de les hivers le plus froids de ma vie. #line:d2_r3d_lo
+Roberto: Je dormais là, assis sur le banc. #line:d2_r3e_hi
 <<endif>>
 
 Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3e_lo

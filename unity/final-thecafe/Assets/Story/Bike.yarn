@@ -1,32 +1,32 @@
 ﻿title: Day1
 ---
-1Je me demande si je vais trouver beaucoup de gens ce soir... #line:bike-d1-0
-<<wait 7>>
-1Je devrais m'arrêter ici pour voir si quelqu'un traîne par là ce soir... #line:bike-d1-1
-<<wait 7>>
-1Ici peut-être, ça a l'air d'être un bon endroit... #line:bike-d1-2
+Je me demande si je vais trouver beaucoup de monde ce soir, avec cette pluie automnale... #line:bike-d1-0
+<<wait 5>>
+Je devrais m'arrêter ici pour voir si quelqu'un traîne dans le coin ce soir... #line:bike-d1-1
+<<wait 5>>
+Ici, sous cet arbre peut-être. Ça a l'air d'être un bon endroit un peu à l'abri... #line:bike-d1-2
 ===
 title: Day2
 ---
-2Je me demande si je vais trouver beaucoup de gens ce soir... #line:bike-d2-0
-<<wait 7>>
-2Je devrais m'arrêter ici pour voir si quelqu'un traîne par là ce soir... #line:bike-d2-1
-<<wait 7>>
-2Ici peut-être, ça a l'air d'être un bon endroit... #line:bike-d2-2
+L'hiver est déjà arrivé... Je me demande si je trouverai quelqu'un aujourd'hui dans les rues... #line:bike-d2-0
+<<wait 5>>
+Peut-être que je vais retrouver Roberto sous son arbre ! #line:bike-d2-1
+<<wait 5>>
+Toutes les feuilles ont disparu... Ce n'est pas Roberto là-bas ? #line:bike-d2-2
 ===
 title: Day3
 ---
-3Je me demande si je vais trouver beaucoup de gens ce soir... #line:bike-d3-0
-<<wait 7>>
-3Je devrais m'arrêter ici pour voir si quelqu'un traîne par là ce soir... #line:bike-d3-1
-<<wait 7>>
-3Ici peut-être, ça a l'air d'être un bon endroit... #line:bike-d3-2
+Les maraudes deviennent beaucoup plus agréables au printemps... Les périodes les plus difficiles de la vie dans la rue sont terminées. #line:bike-d3-0
+<<wait 5>>
+J'espère qu'on va retrouver Roberto sous son grand arbre... #line:bike-d3-1
+<<wait 5>>
+Peut-être que Roberto a passé tout l'hiver dehors. Maintenant que les premières fleurs apparaissent, il doit être content ! #line:bike-d3-2
 ===
 title: Day4
 ---
-4Je me demande si je vais trouver beaucoup de gens ce soir... #line:bike-d4-0
-<<wait 7>>
-4Je devrais m'arrêter ici pour voir si quelqu'un traîne par là ce soir... #line:bike-d4-1
-<<wait 7>>
-4Ici peut-être, ça a l'air d'être un bon endroit... #line:bike-d4-2
+Quelle chaleur ! #line:bike-d4-0
+<<wait 5>>
+On devrait bien trouver un endroit comme l'arbre de Roberto pour profiter d'un peu d'ombre. #line:bike-d4-1
+<<wait 5>>
+Je devrais aller voir si Roberto est là-bas comme d'habitude... #line:bike-d4-2
 ===
