@@ -4114,13 +4114,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194079752}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.33811125, y: 0.54687643, z: 0.25617567, w: -0.7217902}
-  m_LocalPosition: {x: 19.050873, y: -18.249203, z: 6.1690674}
-  m_LocalScale: {x: -2.4000003, y: -2.3999999, z: -2.4}
+  m_LocalRotation: {x: 0.3704785, y: 0.4782197, z: -0.5713707, w: -0.5546054}
+  m_LocalPosition: {x: 17.9, y: -14.67, z: 6.1690674}
+  m_LocalScale: {x: -2, y: -2, z: -2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1566199675}
-  m_LocalEulerAnglesHint: {x: -50.2, y: 285.7, z: 0}
+  m_LocalEulerAnglesHint: {x: 7.79, y: 285.7, z: 85.8}
 --- !u!64 &194079754
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6660,7 +6660,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -6992,13 +6992,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 327239676}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.9248782, y: 0, z: 0, w: 0.3802635}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.88271064, y: -0.075734094, z: 0.24347626, w: 0.3947223}
+  m_LocalPosition: {x: 55.6, y: -3.5, z: 13.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1566199675}
-  m_LocalEulerAnglesHint: {x: 135.3, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 132.8, y: -33, z: -4.94}
 --- !u!114 &327239678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7039,13 +7039,13 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.94428545, b: 0.8180592, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
-  m_SpotAngle: 30
+  m_SpotAngle: 57.94146
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -20238,7 +20238,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
