@@ -25,6 +25,8 @@ title: Day1_R_2
 <<ZoomOut 4.8>>
 Roberto: Bonsoir. Je suis Roberto. #line:d1_r2a
 Roberto: Un café volontiers. Je n'aime pas le thé. #line:d1_r2b
+Roberto: Il pleut beaucoup aujourd'hui. Je suis allé à la bibliothèque. #line:d1_r2c
+Roberto: Je pense dormir ici. #line:d1_r2d
 <<set $day1_fill to 2>>
 ===
 
@@ -33,10 +35,13 @@ title: Day1_R_3
 <<ZoomOut 30>>
 Roberto: Bonsoir. Je suis Roberto. #line:d1_r3a
 Roberto: Merci, un café. Je n'aime pas le thé. #line:d1_r3b
-Roberto: Oui. Je suis très bien ici, sous mon grand arbre. #line:d1_r3c
-Roberto: C'est un peu comme une grande chambre. #line:d1_r3d
-Roberto: Tant qu'il y a un toit au-dessus de ma tête, je me sens en sécurité. #line:d1_r3e
-Roberto: Mieux que les abris. #line:d1_r3f
-Roberto: On m'a raconté qu'il y avait beaucoup de vols là-bas. #line:d1_r3g
+Roberto: J'ai passé ma journée à la bibliothèque. #line:d1_r3c
+Roberto: La pluie ne m'a pas trop déranger.#line:d1_r3d
+Roberto: Je suis très bien ici, sous mon grand arbre. #line:d1_r3e
+Roberto: C'est un peu comme une grande chambre. #line:d1_r3f
+Roberto: Tant qu'il y a un toit au-dessus de ma tête, je me sens en sécurité. #line:d1_r3g
+Roberto: Mieux que les abris. #line:d1_r3h
+Roberto: On m'a raconté qu'il y avait beaucoup de vols là-bas. #line:d1_r3i
+Roberto: Je reste ici. #line:d1_r3j
 <<set $day1_fill to 3>>
 ===
