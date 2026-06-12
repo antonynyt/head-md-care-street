@@ -43,6 +43,13 @@ public class CupFilling : MonoBehaviour
 
     private void Update()
     {
+        if (!isFilling) {
+            //stop fill sound if not filling
+            AudioSource audioSource = GetComponent<AudioSource>();
+            if (audioSource != null && audioSource.isPlaying) {
+                audioSource.Stop();
+            }
+        }
         if (isFilling)
         {
             currentFill01 += fillSpeed * Time.deltaTime;
@@ -53,6 +60,11 @@ public class CupFilling : MonoBehaviour
             }
             ApplyFill();
             OnFillProgress.Invoke(currentFill01);
+            // play
+            AudioSource audioSource = GetComponent<AudioSource>();
+            if (audioSource != null && !audioSource.isPlaying)            {
+                audioSource.Play();
+            }
         }
         else if ( CurrentStep < 1 )
         {
