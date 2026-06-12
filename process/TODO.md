@@ -1,5 +1,16 @@
 # TODOLIST
 
+## 08.06.2026
+
+- [ ] Sound design
+- [ ] Enregistrement Roberto
+- [ ] Interaction Bike
+- [ ] Shader sur les objet interactions différentes (toon shading)
+
+
+
+
+
 **Rôle**:  maraudeur·se (pas personne sans-abri).
 **Boucle centrale:** vélo → arrêt → presser la tasse → zoom/out → révélations progressives → dialogue fragmenté sur 3 jours. Priorité = B1 Tree.
 
