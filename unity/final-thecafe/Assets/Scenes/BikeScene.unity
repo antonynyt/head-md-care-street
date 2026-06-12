@@ -10375,13 +10375,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   dialogueRunner: {fileID: 367477508}
-  delayBetweenLoops: 7
+  delayBetweenLoops: 5
   sequence:
     daysYarnNodes:
-    - Day1
-    - Day2
-    - Day3
-    - Day4
+    - nodeName: Day1
+      objectsToActivate:
+      - {fileID: 1206746868}
+      - {fileID: 2106624492}
+    - nodeName: Day2
+      objectsToActivate:
+      - {fileID: 511194224}
+      - {fileID: 894726859}
+    - nodeName: Day3
+      objectsToActivate:
+      - {fileID: 377930295}
+      - {fileID: 1520123418}
+    - nodeName: Day4
+      objectsToActivate:
+      - {fileID: 1170764075}
+      - {fileID: 1566199674}
   bikeBrake: {fileID: 0}
 --- !u!1001 &542798230
 PrefabInstance:
@@ -13497,7 +13509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &695131971
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25804,6 +25816,10 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 2958262986520364888, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2958262987206614837, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -26016,6 +26032,10 @@ PrefabInstance:
       propertyPath: 'dialoguePresenters.Array.data[6]'
       value: 
       objectReference: {fileID: 1781719012}
+    - target: {fileID: 8877867826578261527, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9078442560890639579, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -41941,7 +41961,6 @@ MonoBehaviour:
   pressDurationToZero: 3
   speedTransitionRate: 4
   sceneChangeThreshold: 4
-  transitionScene: RobertoDay1
   brakeAnimator: {fileID: 925303107}
   brakeClip: {fileID: 8300000, guid: 1eeb040f4a97f6a488aa72e61ac3ad93, type: 3}
   brakeVolume: 3
@@ -44267,7 +44286,6 @@ MonoBehaviour:
   pressDurationToZero: 3
   speedTransitionRate: 4
   sceneChangeThreshold: 4
-  transitionScene: RobertoDay1
   brakeAnimator: {fileID: 925303107}
   brakeClip: {fileID: 8300000, guid: 1eeb040f4a97f6a488aa72e61ac3ad93, type: 3}
   brakeVolume: 3
@@ -44631,7 +44649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2048393096
 MonoBehaviour:
   m_ObjectHideFlags: 0

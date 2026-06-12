@@ -15,7 +15,6 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private float pressDurationToZero = 3f;
     [SerializeField] private float speedTransitionRate = 4f;
     [SerializeField] private float sceneChangeThreshold = 4f;
-    [SerializeField] private string transitionScene = $"RobertoDay{DialogueDirectorBike.CurrentDay}";
 
     [Header("Animation")]
     [SerializeField] private Animator brakeAnimator;
@@ -24,6 +23,7 @@ public class BikeBrake : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private AudioClip brakeClip;
     [SerializeField] private float brakeVolume = 1f;
 
+    private string transitionScene = $"RobertoDay{DialogueDirectorBike.CurrentDay}";
     private const float SpeedTransitionRate = 4f;
 
     private AudioSource brakeAudioSource;
