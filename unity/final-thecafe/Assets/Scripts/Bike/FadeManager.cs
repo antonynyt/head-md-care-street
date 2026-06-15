@@ -9,6 +9,8 @@ public class FadeManager : MonoBehaviour
 
     [SerializeField] private Image fadeImage;
     [SerializeField] private float fadeDuration = 1.5f;
+    // bool fade from opacity 0 to 1 when start load
+    [SerializeField] private bool fadeOnStart = false;
 
     private void Awake()
     {
@@ -17,7 +19,15 @@ public class FadeManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(FadeIn());
+        if (fadeOnStart)
+        {
+            StartCoroutine(FadeOut());
+            //wait for fade and start fade in coroutine
+            StartCoroutine(WaitAndFadeIn(fadeDuration));
+        } else
+        {
+            StartCoroutine(FadeIn());
+        }
     }
 
     public void LoadScene(string sceneName)
@@ -36,6 +46,21 @@ public class FadeManager : MonoBehaviour
         yield return Fade(1f, 0f);
     }
 
+    private IEnumerator FadeOut()
+    {
+        float elapsed = 0f;
+        Color c = fadeImage.color;
+        while (elapsed < 1f)
+        {
+            elapsed += Time.deltaTime;
+            c.a = Mathf.Lerp(0f, 1f, elapsed / 1f);
+            fadeImage.color = c;
+            yield return null;
+        }
+        c.a = 1f;
+        fadeImage.color = c;
+    }
+
     private IEnumerator Fade(float startAlpha, float endAlpha)
     {
         float elapsed = 0f;
@@ -49,5 +74,11 @@ public class FadeManager : MonoBehaviour
         }
         c.a = endAlpha;
         fadeImage.color = c;
+    }
+
+    private IEnumerator WaitAndFadeIn(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        StartCoroutine(FadeIn());
     }
 }
