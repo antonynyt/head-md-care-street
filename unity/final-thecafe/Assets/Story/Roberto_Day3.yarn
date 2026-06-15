@@ -34,13 +34,13 @@ Roberto: Salut, merci pour le café. #line:d3_r3a
 Roberto: Aujourd'hui, le bibliothécaire m'a donné un livre de sanskrit. Je suis très content. #line:d3_r3b
 
 <<if $day1_fill >= 3 && $day2_fill >= 2>>
-Roberto: Vous savez, je passe tellement de temps à la bibliothèque qu'il a dû me voir étudier le sanskrit. C'est ma nouvelle passion. J'adore ! #line:d3_r3_if1a
+Roberto: Tu sais, je passe tellement de temps à la bibliothèque qu'il a dû me voir étudier le sanskrit. C'est ma nouvelle passion. J'adore ! #line:d3_r3_if1a
 Roberto: Je lui ai dit que je n'avais pas de bibliothèque chez moi, mais il a rigolé en disant que j'avais bien un coin dans ma grande maison sous l'arbre ! #line:d3_r3_if1b
 Roberto: Même quand je travaillais dans l'hôtellerie, je passais beaucoup de temps à la bibliothèque. #line:d3_r3_if1c
 Roberto: Quand j'ai commencé à vivre dans la rue, j'étais content d'avoir plus de temps. #line:d3_r3_if1d
 Roberto: Plus de temps pour lire, apprendre et réfléchir... #line:d3_r3g_hi
 <<elseif $day1_fill >= 2 || $day2_fill >= 2>>
-Roberto: Vous savez, je passe tellement de temps à la bibliothèque qu'il a dû me voir étudier le sanskrit. C'est ma nouvelle passion. J'adore ! #line:d3_r3_if2a
+Roberto: Tu sais, je passe tellement de temps à la bibliothèque qu'il a dû me voir étudier le sanskrit. C'est ma nouvelle passion. J'adore ! #line:d3_r3_if2a
 Roberto: Même quand je travaillais dans l'hôtellerie, je passais beaucoup de temps à la bibliothèque. #line:d3_r3_if2b
 <<else>>
 Roberto: Après le grec ancien, l'arabe et le chinois, ma nouvelle passion c'est le sanskrit. #line:d3_r3_elsea
