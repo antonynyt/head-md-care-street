@@ -33056,7 +33056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   fadeImage: {fileID: 1500133991}
-  fadeDuration: 4
+  fadeDuration: 4.5
   fadeOnStart: 0
 --- !u!114 &1249097189
 MonoBehaviour:
@@ -33071,7 +33071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FadeManager
   fadeImage: {fileID: 1987609829}
-  fadeDuration: 1.5
+  fadeDuration: 2
   fadeOnStart: 1
 --- !u!4 &1249097190
 Transform:
