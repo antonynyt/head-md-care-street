@@ -12,11 +12,15 @@ Our project is about taking care of people on the street by taking time, listeni
 - [journal/2026-05-22](journal/2026-05-22.md)
 - [journal/2026-05-26](journal/2026-05-26.md)
 - [journal/2026-06-01](journal/2026-06-01.md)
+- [journal/2026-06-01](journal/2026-06-02.md)
+- [journal/2026-06-01](journal/2026-06-05.md)
+- [journal/2026-06-01](journal/2026-06-11.md)
 
 ## Story
 
 - [story/2026-05-22](story/2026-05-22.md)
 - [story/2026-05-29](story/2026-05-29.md)
+- [story/2026-05-29](story/2026-06-02.md)
 
 ## Field
 
