@@ -15,14 +15,14 @@ Tu as l'air bien ici, un peu à l'abri de la pluie. #line:d1_m3
 
 title: Day1_R_1
 ---
-<<ZoomOut 3.8>>
+<<ZoomOut 3>>
 Roberto: Bonsoir. Je suis Roberto. #line:d1_r1
 <<set $day1_fill to 1>>
 ===
 
 title: Day1_R_2
 ---
-<<ZoomOut 4.8>>
+<<ZoomOut 15>>
 Roberto: Bonsoir. Je suis Roberto. #line:d1_r2a
 Roberto: Un café volontiers. Je n'aime pas le thé. #line:d1_r2b
 Roberto: Il pleut beaucoup aujourd'hui. Je suis allé à la bibliothèque. #line:d1_r2c
@@ -32,7 +32,7 @@ Roberto: Je pense dormir ici. #line:d1_r2d
 
 title: Day1_R_3
 ---
-<<ZoomOut 35>>
+<<ZoomOut 38>>
 Roberto: Bonsoir. Je suis Roberto. #line:d1_r3a
 Roberto: Merci, un café. Je n'aime pas le thé. #line:d1_r3b
 Roberto: J'ai passé ma journée à la bibliothèque. #line:d1_r3c

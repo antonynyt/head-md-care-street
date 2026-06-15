@@ -169,6 +169,7 @@ public class CupInteractionDirector : MonoBehaviour
     private IEnumerator LoadSceneAfterDelay()
     {
         yield return new WaitForSeconds(SceneChangeWaitTime);
+        dialogueRunner.SaveStateToPersistentStorage("roberto_save");
         SceneManager.LoadScene("BikeScene");
     }
 
