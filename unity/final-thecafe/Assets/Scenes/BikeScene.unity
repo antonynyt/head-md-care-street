@@ -4098,7 +4098,6 @@ GameObject:
   - component: {fileID: 194079753}
   - component: {fileID: 194079756}
   - component: {fileID: 194079755}
-  - component: {fileID: 194079754}
   m_Layer: 0
   m_Name: Heatwave
   m_TagString: Untagged
@@ -4114,35 +4113,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194079752}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3704785, y: 0.4782197, z: -0.5713707, w: -0.5546054}
-  m_LocalPosition: {x: 17.9, y: -14.67, z: 6.1690674}
+  m_LocalRotation: {x: 0.5127777, y: 0.61180973, z: -0.44808254, w: -0.40245497}
+  m_LocalPosition: {x: 17.900002, y: -14.669998, z: 6.1690674}
   m_LocalScale: {x: -2, y: -2, z: -2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1566199675}
-  m_LocalEulerAnglesHint: {x: 7.79, y: 285.7, z: 85.8}
---- !u!64 &194079754
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194079752}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_LocalEulerAnglesHint: {x: 7.79, y: 253.91501, z: 85.8}
 --- !u!23 &194079755
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -793,6 +793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CupInteractionDirector
   cup: {fileID: 204449749}
   dialogueRunner: {fileID: 529642498}
+  SceneChangeWaitTime: 5
   sequence:
     sequenceName: Day2
     fillStepNodes:
@@ -2927,7 +2928,7 @@ MonoBehaviour:
   endLineWhenVoiceoverComplete: 1
   fadeOutTimeOnLineFinish: 0.05
   waitTimeBeforeLineStart: 0
-  waitTimeAfterLineComplete: 2
+  waitTimeAfterLineComplete: 1
   audioSource: {fileID: 0}
 --- !u!4 &1836419171
 Transform:
