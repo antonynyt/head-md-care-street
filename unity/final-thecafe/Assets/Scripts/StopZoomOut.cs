@@ -13,10 +13,14 @@ public class StopZoomOut : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Debug.Log("Entered StopZoomOut state. State info: " + stateInfo.ToString());
-
-        cupFill = animator.GetComponent<CameraController>().cupFilling.currentFill01;
-        //Debug.Log($"Current cup fill level: {cupFill}");
+        if (CustomYarnCommands.useCupFillForZoomOut)
+        {
+            cupFill = animator.GetComponent<CameraController>().cupFilling.currentFill01;
+        }
+        else
+        {
+            cupFill = 1f; // ignore actual cup fill, play the whole zoom-out animation
+        }
 
         stateTime = 0f;
         animator.SetFloat("MotionTime", 0);
