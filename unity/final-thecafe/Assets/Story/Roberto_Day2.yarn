@@ -6,16 +6,15 @@ Salut Roberto. Ça fait un moment qu'on ne s'est pas vus. #line:d2_m1
 title: Day2_M_2
 ---
 Je te sers un café. #line:d2_m2a
+===
+
+title: Day2_M_3
+---
 <<if $day1_fill <=2>>
 Un peu plus que la dernière fois. #line:d2_m2b
 <<else>>
 Je me rappelle que tu n'aimes pas le thé. #line:d2_m2c
 <<endif>>
-===
-
-title: Day2_M_3
----
-Il fait froid. L'hiver est là... #line:d2_m3
 ===
 
 title: Day2_R_1
