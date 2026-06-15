@@ -20,7 +20,7 @@ public class PedalSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.spatialBlend = 0f;
         audioSource.loop = true;
-        audioSource.volume = 1f;
+        audioSource.volume = 0.5f;
 
         if (pedalClip != null)
         {

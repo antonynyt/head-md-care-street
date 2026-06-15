@@ -29551,7 +29551,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.502
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -42328,7 +42328,7 @@ MonoBehaviour:
   sceneChangeThreshold: 4
   brakeAnimator: {fileID: 925303107}
   brakeClip: {fileID: 8300000, guid: 1eeb040f4a97f6a488aa72e61ac3ad93, type: 3}
-  brakeVolume: 3
+  brakeVolume: 1
 --- !u!1001 &1916414429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44658,7 +44658,7 @@ MonoBehaviour:
   sceneChangeThreshold: 4
   brakeAnimator: {fileID: 925303107}
   brakeClip: {fileID: 8300000, guid: 1eeb040f4a97f6a488aa72e61ac3ad93, type: 3}
-  brakeVolume: 3
+  brakeVolume: 1
 --- !u!1001 &2024279979
 PrefabInstance:
   m_ObjectHideFlags: 0
