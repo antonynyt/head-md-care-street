@@ -1,20 +1,26 @@
-# Workshop Care - Thé ou Café
+# Workshop Care - HEAD Master Media Design
+## June 2026 - Collaboration avec Bibliotheque de la Cité
+### Thé Ou Café
+#### Taking the time to connect over a hot drink.
 
-We are creating tablet-based stories for an in-situ exhibition on the concept of “Care” at the Geneva Municipal Library. Our goal is to collect stories for the exhibition, and transform them into interactive stories.
+An interactive story lasting about five minutes, envisioned to be played on an iPad. Inspired by the night patrols conducted in Geneva by social workers’ associations, it explores various encounters with people living on the streets through moments of presence and human connection.
 
-Notre concept s'articule autour du care dans la rue. Partager un moment avec les personnes de la rue autour du thé et du café.
+The visitor is invited to slow down and listen. The time devoted to each conversation depends on the simple act of pouring a glass of a hot drink: the longer it is filled, the more the story unfolds.
+
+As the seasons go past, relationships evolve and fragments of lives emerge gradually - sometimes quiet, sometimes unexpected. Some connections form instantly; others require patience and repeated visits. 
+
+The narrative is conveyed exclusively through voice and is inspired by testimonies gathered during the research phase from social workers and people with lived experience of homelessness.
+
+![](press/firstimage.png)
 
 # Whatsup repo??
 
 - Process: [process/](process/README.md)
-- Concept Presentations: [press/](press/README.md)
+- Presentations: [press/](press/README.md)
 - Code: [unity/](unity/README.md)
-
-
-![](process/assets/framing-shots-scenes.jpeg)
 
 # Team
 
-- Elena
-- Vincent
-- Antony
+- Elena Gazzarrini
+- Vincent Paley 
+- Antony Neyret
