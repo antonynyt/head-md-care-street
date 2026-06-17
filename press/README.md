@@ -1,7 +1,9 @@
 ## Press
 
-The evolution of how we presented our ideeas and final project. 
+Final presentation for the Bibliotheque de la Cité in Geneva, and some images for the presskit, in PDF format.  
 
-- "2026-05-19" folder contains the first presentation
-- "2026-06-01-project_description" is a pdf that we shared with the people we collaborated with in order to let them know about our decision to write the story about Roberto. 
-- "TheOuCafe_Final_Presentation.pdf" is the final press presentation
+![](images/img1.png)
+The interactive docu-fiction aesthetic style, evolving through the seasons. 
+
+![](images/img2.png)
+The iPad experience immersed in the real world, and interactions with it. 

@@ -11,12 +11,10 @@ As the seasons go past, relationships evolve and fragments of lives emerge gradu
 
 The narrative is conveyed exclusively through voice and is inspired by testimonies gathered during the research phase from social workers and people with lived experience of homelessness.
 
-![](press/firstimage.png)
-
 # Whatsup repo??
 
-- Process: [process/](process/README.md)
-- Presentations: [press/](press/README.md)
+- PressKit: [press/](press/README.md)
+- Research and Production Process, documented daily: [process/](process/README.md)
 - Code: [unity/](unity/README.md)
 
 # Team
