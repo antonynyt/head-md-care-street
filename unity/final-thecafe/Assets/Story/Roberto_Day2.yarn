@@ -40,19 +40,11 @@ title: Day2_R_3
 <<ZoomOut 35>>
 Roberto: Salut, tout ce café pour moi? Merci #line:d2_r3a
 Roberto: Il commence à faire un peu froid, mais il y a pire. #line:d2_r3b
-
-<<if $day1_fill >= 3>>
 Roberto: L'année passée, c'était l'un des hivers les plus froids de ma vie. #line:d2_r3d_hi
 Roberto: Je dormais là, assis sur le banc. #line:d2_r3e_hi
 Roberto: Je dors toujours assis parce que j'ai peur qu'on me vole mes affaires. #line:d2_r3f_hi
 Roberto: Il faisait tellement froid que je devais me réveiller plusieurs fois par nuit pour courir et me réchauffer. #line:d2_r3g_hi
 Roberto: Ça me faisait faire un peu de sport. #line:d2_r3h_hi
-<<else>>
-Roberto: L'année passée, il faisait très froid. L'un des hivers les plus froids de ma vie. #line:d2_r3d_lo
-Roberto: Je dormais assis. #line:d2_r3e_lo
-Roberto: Je dors toujours assis parce que j'ai peur qu'on me vole mes affaires. #line:d2_r3f_lo
-<<endif>>
-
 Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3c
 Roberto: À bientôt ! #line:d2_r3d
 <<set $day2_fill to 3>>
