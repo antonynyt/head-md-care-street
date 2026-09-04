@@ -5,15 +5,15 @@ Salut Roberto. Ça fait un moment qu'on ne s'est pas vus. #line:d2_m1
 
 title: Day2_M_2
 ---
-Je te sers un café. #line:d2_m2a
+Je te sers un café. #line:d2_m2
 ===
 
 title: Day2_M_3
 ---
 <<if $day1_fill <=2>>
-Un peu plus que la dernière fois. #line:d2_m2b
+Un peu plus que la dernière fois. #line:d2_m3a
 <<else>>
-Je me rappelle que tu n'aimes pas le thé. #line:d2_m2c
+Je me rappelle que tu n'aimes pas le thé. #line:d2_m3b
 <<endif>>
 ===
 
@@ -40,12 +40,12 @@ title: Day2_R_3
 <<ZoomOut 35>>
 Roberto: Salut, tout ce café pour moi? Merci #line:d2_r3a
 Roberto: Il commence à faire un peu froid, mais il y a pire. #line:d2_r3b
-Roberto: L'année passée, c'était l'un des hivers les plus froids de ma vie. #line:d2_r3d_hi
-Roberto: Je dormais là, assis sur le banc. #line:d2_r3e_hi
-Roberto: Je dors toujours assis parce que j'ai peur qu'on me vole mes affaires. #line:d2_r3f_hi
-Roberto: Il faisait tellement froid que je devais me réveiller plusieurs fois par nuit pour courir et me réchauffer. #line:d2_r3g_hi
-Roberto: Ça me faisait faire un peu de sport. #line:d2_r3h_hi
-Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3c
-Roberto: À bientôt ! #line:d2_r3d
+Roberto: L'année passée, c'était l'un des hivers les plus froids de ma vie. #line:d2_r3c
+Roberto: Je dormais là, assis sur le banc. #line:d2_r3d
+Roberto: Je dors toujours assis parce que j'ai peur qu'on me vole mes affaires. #line:d2_r3e
+Roberto: Il faisait tellement froid que je devais me réveiller plusieurs fois par nuit pour courir et me réchauffer. #line:d2_r3f
+Roberto: Ça me faisait faire un peu de sport. #line:d2_r3g
+Roberto: Certaines nuits sont meilleures que d'autres. #line:d2_r3h
+Roberto: À bientôt ! #line:d2_r3i
 <<set $day2_fill to 3>>
 ===
