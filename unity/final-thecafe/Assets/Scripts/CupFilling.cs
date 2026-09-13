@@ -20,6 +20,7 @@ public class CupFilling : MonoBehaviour
     private float fillSpeed;          // cached 1 / totalFillTime
     private float currentEmptySpeed;  // computed at start of each drain cycle
     private bool drainFrozen;         // holds the fill level steady while waiting for dialogue to catch up
+    private bool timedDrainInProgress; // true once a drain starting from step >= 1 has begun
 
     private Renderer liquidRenderer;
     private MaterialPropertyBlock propertyBlock;
@@ -71,7 +72,7 @@ public class CupFilling : MonoBehaviour
         {
             // Hold the fill level steady while we wait for dialogue to catch up.
         }
-        else if ( CurrentStep < 1 )
+        else if ( CurrentStep < 1 && !timedDrainInProgress )
         {
             currentFill01 -= fillSpeed * Time.deltaTime;
             currentFill01 = Mathf.Clamp01(currentFill01);
@@ -95,6 +96,7 @@ public class CupFilling : MonoBehaviour
         if (Mathf.Approximately(currentFill01, 1f)) return;
 
         isFilling = true;
+        timedDrainInProgress = false; // starting a fresh press/drain cycle
         OnFillStarted.Invoke();
     }
 
@@ -109,6 +111,10 @@ public class CupFilling : MonoBehaviour
     {
         if (!isFilling) return;
         isFilling = false;
+        // Once we've reached step 1+, the whole drain to zero stays on the timed speed —
+        // it must not fall back to the plain fill speed just because the live fill level
+        // dips below the step-1 threshold partway through draining.
+        timedDrainInProgress = CurrentStep >= 1;
         SetEmptySpeedFromCurrentFill();   // lock the drain speed based on current fill
         OnFillReleased.Invoke(currentFill01);
     }

@@ -113,24 +113,49 @@ public class CupInteractionDirector : MonoBehaviour
 
         string replyNode = GetReplyNode();
 
+        float zoomOutSeconds = 0f;
+        bool useCupFillForReply = true;
+        bool foundArgs = !string.IsNullOrWhiteSpace(replyNode)
+            && TryGetZoomOutArgs(replyNode, out zoomOutSeconds, out useCupFillForReply);
+
+        if (releaseRoutine != null)
+            StopCoroutine(releaseRoutine);
+
+        if (foundArgs && !useCupFillForReply)
+        {
+            // This reply's camera zoom is explicitly independent of the cup fill (e.g.
+            // Day 4's silent "..." replies via <<ZoomOut N, false>>), so the camera can
+            // just wait for M to finish as normal — no early trigger, no suppression.
+            // But the cup's own liquid-drain visual still needs a correct speed *right
+            // now*: EndFill() already locked in a drain speed based on whatever
+            // totalEmptyTime was last set to (often a stale/default value), and without
+            // correcting it here the cup would visibly drain at that wrong pace for the
+            // whole time we're waiting on M. So extend it by M's remaining time now —
+            // the reply's own <<ZoomOut>> command will re-apply the same (by-then-lower)
+            // fill over its plain duration once M finishes, which continues at the exact
+            // same rate with no jump, since it's all one linear drain either way.
+            float remainingM = dialogueRunner.IsDialogueRunning ? VoiceOverPresenterFixed.RemainingLineTime : 0f;
+            cup.totalEmptyTime = zoomOutSeconds + Mathf.Max(0f, remainingM);
+            cup.SetEmptySpeedFromCurrentFill();
+
+            releaseRoutine = StartCoroutine(RunReleaseSequence(replyNode));
+            return;
+        }
+
         // If we released mid-sentence, try to start the zoom-out + cup drain right now
-        // instead of freezing until M finishes, by reading the reply's own <<ZoomOut N>>
-        // duration ahead of time and stretching it by however long M has left to talk.
+        // instead of freezing until M finishes, using the reply's own <<ZoomOut N>>
+        // duration read ahead of time and stretched by however long M has left to talk.
         // If we can't determine N (e.g. no such command on the node), fall back to the
         // safe freeze-and-wait behaviour so nothing desyncs.
-        float? zoomOutSeconds = !string.IsNullOrWhiteSpace(replyNode)
-            ? TryGetZoomOutSeconds(replyNode)
-            : null;
-
-        if (zoomOutSeconds.HasValue)
+        if (foundArgs)
         {
             float remaining = dialogueRunner.IsDialogueRunning ? VoiceOverPresenterFixed.RemainingLineTime : 0f;
-            float extendedDuration = zoomOutSeconds.Value + Mathf.Max(0f, remaining);
+            float extendedDuration = zoomOutSeconds + Mathf.Max(0f, remaining);
 
             // Skip the reply node's own <<ZoomOut N>> command later — we're applying its
             // effects right now, with the extended duration, so it doesn't stomp on it.
             CustomYarnCommands.suppressNextZoomOut = true;
-            CustomYarnCommands.ApplyZoomOut(extendedDuration);
+            CustomYarnCommands.ApplyZoomOut(extendedDuration, useCupFillForReply);
 
             if (CameraController.Instance != null)
             {
@@ -145,9 +170,6 @@ public class CupInteractionDirector : MonoBehaviour
             cup.SetDrainFrozen(true);
         }
 
-        if (releaseRoutine != null)
-            StopCoroutine(releaseRoutine);
-
         releaseRoutine = StartCoroutine(RunReleaseSequence(replyNode));
     }
 
@@ -161,20 +183,24 @@ public class CupInteractionDirector : MonoBehaviour
     }
 
     /// <summary>
-    /// Reads the numeric argument of a "ZoomOut" command compiled into the given node,
-    /// straight from the Yarn project's compiled program — so the .yarn script stays the
-    /// single source of truth and nothing needs to be duplicated in the Inspector.
-    /// Uses reflection over Yarn Spinner's internal instruction format, since that shape
-    /// isn't public API: if anything about it doesn't match at runtime, this simply
-    /// returns null and the caller falls back to the freeze-and-wait behaviour.
+    /// Reads the arguments of a "ZoomOut" command compiled into the given node, straight
+    /// from the Yarn project's compiled program — so the .yarn script stays the single
+    /// source of truth and nothing needs to be duplicated in the Inspector. Handles both
+    /// "ZoomOut 3" and "ZoomOut 30, false" forms. Uses reflection over Yarn Spinner's
+    /// internal instruction format, since that shape isn't public API: if anything about
+    /// it doesn't match at runtime, this simply returns false and the caller falls back
+    /// to the freeze-and-wait behaviour.
     /// </summary>
-    private float? TryGetZoomOutSeconds(string nodeName)
+    private bool TryGetZoomOutArgs(string nodeName, out float seconds, out bool useCupFill)
     {
+        seconds = 0f;
+        useCupFill = true;
+
         try
         {
             var program = dialogueRunner.YarnProject?.Program;
             if (program == null || !program.Nodes.TryGetValue(nodeName, out var node))
-                return null;
+                return false;
 
             foreach (var instruction in node.Instructions)
             {
@@ -189,19 +215,24 @@ public class CupInteractionDirector : MonoBehaviour
                 if (string.IsNullOrEmpty(commandText)) continue;
 
                 string[] parts = commandText.Split((char[])null, System.StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length >= 2 && parts[0] == "ZoomOut" &&
-                    float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float value))
-                {
-                    return value;
-                }
+                if (parts.Length < 2 || parts[0] != "ZoomOut") continue;
+
+                string secondsToken = parts[1].TrimEnd(',');
+                if (!float.TryParse(secondsToken, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out seconds))
+                    continue;
+
+                if (parts.Length >= 3 && bool.TryParse(parts[2].TrimEnd(','), out bool parsedFlag))
+                    useCupFill = parsedFlag;
+
+                return true;
             }
         }
         catch (System.Exception e)
         {
-            Debug.LogWarning($"CupInteractionDirector: couldn't read ZoomOut duration from node '{nodeName}': {e.Message}");
+            Debug.LogWarning($"CupInteractionDirector: couldn't read ZoomOut args from node '{nodeName}': {e.Message}");
         }
 
-        return null;
+        return false;
     }
 
     private void PlayFillStep(int stepNumber)

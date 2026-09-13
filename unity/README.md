@@ -12,8 +12,8 @@ The interaction consist of long pressing. (1) you break a bike (2) you pour cafe
 # Todo
 
 - [x] Implement new dialogs recordings in Unity
-- [ ] Set the discussion timings on each scene (`<<ZoomOut [time]>>` dans les .yarn)
-- [ ] Shorten the timings (slightly faster pace, + end sequence zoom out shorter)
+- [x] Set the discussion timings on each scene (`<<ZoomOut [time]>>` dans les .yarn)
+- [x] Shorten the timings (slightly faster pace, + end sequence zoom out shorter)
 - [ ] Add music & sound design (more below)
 - [ ] UX need: Add a small hint on the brakes ([glowing](https://www.youtube.com/watch?v=Q4MW3T4VpxM) outline?) to indicate it's interactive.
 
@@ -22,7 +22,7 @@ The interaction consist of long pressing. (1) you break a bike (2) you pour cafe
 ### Technical bugs
 
 - [ ] Interrupt (fadeout) and avoid (pause) new line to be played when the player press the brakes. On bike scene (biker thoughts).
-- [ ] The questions (cup filling) dialog (from bike to roberto) doesn't wait the end of the question and interrupt the next sentence. e.g. bike dialog gets cut by roberto line. It should stack and play til the end.
+- [x] The questions (cup filling) dialog (from bike to roberto) doesn't wait the end of the question and interrupt the next sentence. e.g. bike dialog gets cut by roberto line. It should stack and play til the end.
 
 
 # Good to know

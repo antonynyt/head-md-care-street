@@ -1,17 +1,17 @@
 {
-  "projectFileVersion": 4,
-  "sourceFiles": [
-    "**/*.yarn"
-  ],
-  "excludeFiles": [
-    "**/*~/*",
-    "./Samples/Yarn Spinner*/*"
-  ],
-  "localisation": {
-    "fr": {
-      "assets": "Assets-fr"
-    }
-  },
-  "baseLanguage": "fr",
-  "compilerOptions": {}
+    "projectFileVersion": 4,
+    "sourceFiles": [
+        "**/*.yarn"
+    ],
+    "excludeFiles": [
+        "**/*~/*",
+        "./Samples/Yarn Spinner*/*"
+    ],
+    "localisation": {
+        "fr": {
+            "assets": "Assets-fr"
+        }
+    },
+    "baseLanguage": "fr",
+    "compilerOptions": {}
 }

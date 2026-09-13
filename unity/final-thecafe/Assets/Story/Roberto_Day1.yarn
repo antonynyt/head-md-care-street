@@ -15,7 +15,7 @@ Tu as l'air bien ici, un peu à l'abri de la pluie. #line:d1_m3
 
 title: Day1_R_1
 ---
-<<ZoomOut 3>>
+<<ZoomOut 5>>
 Roberto: Bonsoir. Je suis Roberto. #line:d1_r1
 <<set $day1_fill to 1>>
 ===
