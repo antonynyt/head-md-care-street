@@ -200,8 +200,8 @@ public class CupInteractionDirector : MonoBehaviour
 
         if (songSource != null && songClip != null)
         {
-            //only play if cup is > 1
-            if (cup.CurrentStep > 1)
+            //only play if cup is > 1 or current scene is 4
+            if (cup.CurrentStep > 1 || SceneManager.GetActiveScene().name == "RobertoDay4")
             {
                 songSource.clip = songClip;
                 songSource.volume = songVolume;

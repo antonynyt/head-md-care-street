@@ -62938,6 +62938,28 @@ MonoBehaviour:
   brakeAnimator: {fileID: 925303107}
   brakeClip: {fileID: 8300000, guid: 1eeb040f4a97f6a488aa72e61ac3ad93, type: 3}
   brakeVolume: 0.5
+--- !u!95 &1915230017
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915230007}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bbefa761236954e5892ea06425b27cb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1916414429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64493,9 +64515,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8300587039813279416, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8300587039813279416, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 54fb93317a1aaeb458042ffa633c0484, type: 2}
+    - target: {fileID: -8300587039813279416, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d523973f3f4064dfc95553807259ec10, type: 2}
     - target: {fileID: -2546872906482955032, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7072302
@@ -64541,9 +64571,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 54fb93317a1aaeb458042ffa633c0484, type: 2}
     - target: {fileID: 8437119269866510723, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437119269866510723, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 54fb93317a1aaeb458042ffa633c0484, type: 2}
+    - target: {fileID: 8437119269866510723, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d523973f3f4064dfc95553807259ec10, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -64563,12 +64601,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1781754269700564937, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1915230008}
+    - targetCorrespondingSourceObject: {fileID: -1781754269700564937, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1915230017}
     - targetCorrespondingSourceObject: {fileID: -1090496902350335888, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2023912597}
     - targetCorrespondingSourceObject: {fileID: -1090496902350335888, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2023912593}
+    - targetCorrespondingSourceObject: {fileID: -1090496902350335888, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2023912601}
   m_SourcePrefab: {fileID: 100100000, guid: aa7a32cd2045d88449e00a370267d054, type: 3}
 --- !u!1 &1987286094
 GameObject:
@@ -65443,6 +65487,28 @@ MonoBehaviour:
   brakeAnimator: {fileID: 925303107}
   brakeClip: {fileID: 8300000, guid: 1eeb040f4a97f6a488aa72e61ac3ad93, type: 3}
   brakeVolume: 0.5
+--- !u!95 &2023912601
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023912592}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bbefa761236954e5892ea06425b27cb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2024279979
 PrefabInstance:
   m_ObjectHideFlags: 0
