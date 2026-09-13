@@ -14,8 +14,8 @@ The interaction consist of long pressing. (1) you break a bike (2) you pour cafe
 - [x] Implement new dialogs recordings in Unity
 - [x] Set the discussion timings on each scene (`<<ZoomOut [time]>>` dans les .yarn)
 - [x] Shorten the timings (slightly faster pace, + end sequence zoom out shorter)
-- [ ] Add music & sound design (more below)
-- [ ] UX need: Add a small hint on the brakes ([glowing](https://www.youtube.com/watch?v=Q4MW3T4VpxM) outline?) to indicate it's interactive.
+- [x] Add music & sound design (more below)
+- [x] UX need: Add a small hint on the brakes ([glowing](https://www.youtube.com/watch?v=Q4MW3T4VpxM) outline?) to indicate it's interactive.
 
 - [ ] **Nice to have**: carton with info all the thanks etc. during the last zoom out sequence.
 
