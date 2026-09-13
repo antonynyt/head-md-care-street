@@ -26,6 +26,15 @@ public class CupInteractionDirector : MonoBehaviour
     [Header("Sequence Data")]
     [SerializeField] private CupSequence sequence;
 
+    [Header("Release Audio")]
+    [SerializeField] private AudioSource releaseSfxSource;
+    [SerializeField] private AudioClip releaseSfxClip;
+    [Range(0f, 1f)] [SerializeField] private float releaseSfxVolume = 1f;
+
+    [SerializeField] private AudioSource songSource;
+    [SerializeField] private AudioClip songClip;
+    [Range(0f, 1f)] [SerializeField] private float songVolume = 1f;
+
     private int lastTriggeredStep = 0;
     private bool isPressing;
     private bool waitingForRelease;
@@ -111,6 +120,8 @@ public class CupInteractionDirector : MonoBehaviour
         waitingForRelease = true;
         zoomAlreadyTriggered = false;
 
+        PlayReleaseAudio();
+
         string replyNode = GetReplyNode();
 
         float zoomOutSeconds = 0f;
@@ -171,6 +182,32 @@ public class CupInteractionDirector : MonoBehaviour
         }
 
         releaseRoutine = StartCoroutine(RunReleaseSequence(replyNode));
+    }
+
+    /// <summary> Plays the release SFX immediately, then starts the song right as the
+    /// SFX ends (sample-accurate via PlayDelayed, no coroutine needed). Uses two separate
+    /// AudioSources so the one-shot SFX and the looping/long-form song don't fight over
+    /// the same source. Volumes are independently tunable in the Inspector. </summary>
+    private void PlayReleaseAudio()
+    {
+        float delay = 0f;
+
+        if (releaseSfxSource != null && releaseSfxClip != null)
+        {
+            releaseSfxSource.PlayOneShot(releaseSfxClip, releaseSfxVolume);
+            delay = releaseSfxClip.length;
+        }
+
+        if (songSource != null && songClip != null)
+        {
+            //only play if cup is > 1
+            if (cup.CurrentStep > 1)
+            {
+                songSource.clip = songClip;
+                songSource.volume = songVolume;
+                songSource.PlayDelayed(delay);
+            }
+        }
     }
 
     private string GetReplyNode()

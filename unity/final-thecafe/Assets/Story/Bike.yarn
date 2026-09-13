@@ -8,19 +8,19 @@ Ici, sous cet arbre peut-être. Ça a l'air d'être un bon endroit un peu à l'a
 ===
 title: Day2
 ---
-L'hiver est déjà là... Il fait froid. #line:bike-d2-0
+Je me demande si je trouverai quelqu'un aujourd'hui dans les rues. #line:bike-d2-if2
 <<wait 7>>
 <<if $day1_fill >=2>>
 J'éspère que Roberto a pu aller se rechauffer à la bibliothèque. #line:bike-d2-if1
 <<else>>
-Je me demande si je trouverai quelqu'un aujourd'hui dans les rues. #line:bike-d2-if2
+L'hiver est déjà là... Il fait froid. #line:bike-d2-0
 <<endif>>
 <<wait 7>>
 Toutes les feuilles ont disparu... #line:bike-d2-1
 ===
 title: Day3
 ---
-C'est beaucoup plus agréable le printemps...#line:bike-d3-0
+C'est beaucoup plus agréable le printemps... même si dans la rue, toutes les périodes de la vie sont difficiles.#line:bike-d3-0
 <<wait 7>>
 J'espère que je vais revoir Roberto. #line:bike-d3-1
 <<wait 7>>
