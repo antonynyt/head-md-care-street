@@ -11,7 +11,7 @@ title: Day2
 Je me demande si je trouverai quelqu'un aujourd'hui dans les rues. #line:bike-d2-if2
 <<wait 7>>
 <<if $day1_fill >=2>>
-J'éspère que Roberto a pu aller se rechauffer à la bibliothèque. #line:bike-d2-if1
+J'espère que Roberto a pu aller se réchauffer à la bibliothèque. #line:bike-d2-if1
 <<else>>
 L'hiver est déjà là... Il fait froid. #line:bike-d2-0
 <<endif>>
@@ -25,7 +25,7 @@ C'est beaucoup plus agréable le printemps... même si dans la rue, toutes les p
 J'espère que je vais revoir Roberto. #line:bike-d3-1
 <<wait 7>>
 <<if $day1_fill >=2>>
-Je me demande ce qu'il lis en ce moment. #line:bike-d3-if1
+Je me demande ce qu'il lit en ce moment. #line:bike-d3-if1
 <<else>>
 Maintenant que les premières fleurs apparaissent, il doit être content ! #line:bike-d3-if2
 <<endif>>

@@ -5043,7 +5043,7 @@ MonoBehaviour:
     - Day4_R_3
   releaseSfxSource: {fileID: 2103460548}
   releaseSfxClip: {fileID: 8300000, guid: a1a891db1a8544e6691bd611bad4a0a7, type: 3}
-  releaseSfxVolume: 0.7
+  releaseSfxVolume: 0.8
   songSource: {fileID: 2103460549}
   songClip: {fileID: 8300000, guid: d22bf80c1c1544ddebeea255fd44f020, type: 3}
   songVolume: 1

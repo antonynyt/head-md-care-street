@@ -9,6 +9,7 @@ public class StopZoomOut : StateMachineBehaviour
     private float cupFill = 0f;
 
     private float stateTime = 0f;
+    private bool zoomOutDoneFired = false;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -23,6 +24,7 @@ public class StopZoomOut : StateMachineBehaviour
         }
 
         stateTime = 0f;
+        zoomOutDoneFired = false;
         animator.SetFloat("MotionTime", 0);
     }
 
@@ -54,8 +56,13 @@ public class StopZoomOut : StateMachineBehaviour
 
             // Debug.Log($"Updating MotionTime to {motionTime} (normalized: {stateInfo.normalizedTime}) with cupFill {cupFill}");
         }
-        else
+        else if (!zoomOutDoneFired)
         {
+            // This state has no outgoing transition, so OnStateUpdate keeps firing every
+            // frame for as long as it stays active — without this guard, OnCupZoomOutDone
+            // (and the scene-load coroutine it starts) would fire again on every single
+            // one of those frames until the scene actually unloads.
+            zoomOutDoneFired = true;
             CupInteractionDirector.Instance.OnCupZoomOutDone();
         }
     }

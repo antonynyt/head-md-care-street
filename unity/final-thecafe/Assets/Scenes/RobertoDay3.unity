@@ -840,7 +840,7 @@ MonoBehaviour:
     - Day3_R_3
   releaseSfxSource: {fileID: 310914203}
   releaseSfxClip: {fileID: 8300000, guid: a1a891db1a8544e6691bd611bad4a0a7, type: 3}
-  releaseSfxVolume: 0.7
+  releaseSfxVolume: 0.8
   songSource: {fileID: 310914204}
   songClip: {fileID: 8300000, guid: 4b09d1a6226094d3e8a7291b00c51047, type: 3}
   songVolume: 1
