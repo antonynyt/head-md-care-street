@@ -19,6 +19,7 @@ public class CupFilling : MonoBehaviour
     public float currentFill01 = 0f;
     private float fillSpeed;          // cached 1 / totalFillTime
     private float currentEmptySpeed;  // computed at start of each drain cycle
+    private bool drainFrozen;         // holds the fill level steady while waiting for dialogue to catch up
 
     private Renderer liquidRenderer;
     private MaterialPropertyBlock propertyBlock;
@@ -66,6 +67,10 @@ public class CupFilling : MonoBehaviour
                 audioSource.Play();
             }
         }
+        else if (drainFrozen)
+        {
+            // Hold the fill level steady while we wait for dialogue to catch up.
+        }
         else if ( CurrentStep < 1 )
         {
             currentFill01 -= fillSpeed * Time.deltaTime;
@@ -91,6 +96,13 @@ public class CupFilling : MonoBehaviour
 
         isFilling = true;
         OnFillStarted.Invoke();
+    }
+
+    /// <summary> While frozen, the cup neither fills nor drains — used to hold the
+    /// fill level steady between finger release and the reply node actually starting. </summary>
+    public void SetDrainFrozen(bool frozen)
+    {
+        drainFrozen = frozen;
     }
 
     public void EndFill()

@@ -30,6 +30,7 @@ public class CupInteractionDirector : MonoBehaviour
     private bool isPressing;
     private bool waitingForRelease;
     private Coroutine releaseRoutine;
+    private bool zoomAlreadyTriggered;
 
     private void Update()
     {
@@ -108,11 +109,99 @@ public class CupInteractionDirector : MonoBehaviour
 
         isPressing = false;
         waitingForRelease = true;
+        zoomAlreadyTriggered = false;
+
+        string replyNode = GetReplyNode();
+
+        // If we released mid-sentence, try to start the zoom-out + cup drain right now
+        // instead of freezing until M finishes, by reading the reply's own <<ZoomOut N>>
+        // duration ahead of time and stretching it by however long M has left to talk.
+        // If we can't determine N (e.g. no such command on the node), fall back to the
+        // safe freeze-and-wait behaviour so nothing desyncs.
+        float? zoomOutSeconds = !string.IsNullOrWhiteSpace(replyNode)
+            ? TryGetZoomOutSeconds(replyNode)
+            : null;
+
+        if (zoomOutSeconds.HasValue)
+        {
+            float remaining = dialogueRunner.IsDialogueRunning ? VoiceOverPresenterFixed.RemainingLineTime : 0f;
+            float extendedDuration = zoomOutSeconds.Value + Mathf.Max(0f, remaining);
+
+            // Skip the reply node's own <<ZoomOut N>> command later — we're applying its
+            // effects right now, with the extended duration, so it doesn't stomp on it.
+            CustomYarnCommands.suppressNextZoomOut = true;
+            CustomYarnCommands.ApplyZoomOut(extendedDuration);
+
+            if (CameraController.Instance != null)
+            {
+                CameraController.Instance.TriggerZoomOut();
+                zoomAlreadyTriggered = true;
+            }
+        }
+        else
+        {
+            // Hold the fill level exactly where it is at release, so the reply node's
+            // ZoomOut command later computes drain speed from the same fill it saw here.
+            cup.SetDrainFrozen(true);
+        }
 
         if (releaseRoutine != null)
             StopCoroutine(releaseRoutine);
 
-        releaseRoutine = StartCoroutine(RunReleaseSequence());
+        releaseRoutine = StartCoroutine(RunReleaseSequence(replyNode));
+    }
+
+    private string GetReplyNode()
+    {
+        if (sequence == null || sequence.replyStepNodes == null || sequence.replyStepNodes.Length == 0)
+            return null;
+
+        int replyIndex = Mathf.Clamp(lastTriggeredStep - 1, 0, sequence.replyStepNodes.Length - 1);
+        return sequence.replyStepNodes[replyIndex];
+    }
+
+    /// <summary>
+    /// Reads the numeric argument of a "ZoomOut" command compiled into the given node,
+    /// straight from the Yarn project's compiled program — so the .yarn script stays the
+    /// single source of truth and nothing needs to be duplicated in the Inspector.
+    /// Uses reflection over Yarn Spinner's internal instruction format, since that shape
+    /// isn't public API: if anything about it doesn't match at runtime, this simply
+    /// returns null and the caller falls back to the freeze-and-wait behaviour.
+    /// </summary>
+    private float? TryGetZoomOutSeconds(string nodeName)
+    {
+        try
+        {
+            var program = dialogueRunner.YarnProject?.Program;
+            if (program == null || !program.Nodes.TryGetValue(nodeName, out var node))
+                return null;
+
+            foreach (var instruction in node.Instructions)
+            {
+                var instructionType = instruction.GetType();
+                string caseName = instructionType.GetProperty("InstructionTypeCase")?.GetValue(instruction)?.ToString();
+                if (caseName != "RunCommand") continue;
+
+                object runCommand = instructionType.GetProperty("RunCommand")?.GetValue(instruction);
+                if (runCommand == null) continue;
+
+                string commandText = runCommand.GetType().GetProperty("CommandText")?.GetValue(runCommand) as string;
+                if (string.IsNullOrEmpty(commandText)) continue;
+
+                string[] parts = commandText.Split((char[])null, System.StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length >= 2 && parts[0] == "ZoomOut" &&
+                    float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float value))
+                {
+                    return value;
+                }
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"CupInteractionDirector: couldn't read ZoomOut duration from node '{nodeName}': {e.Message}");
+        }
+
+        return null;
     }
 
     private void PlayFillStep(int stepNumber)
@@ -128,14 +217,23 @@ public class CupInteractionDirector : MonoBehaviour
             _ = dialogueRunner.StartDialogue(node);
     }
 
-    private IEnumerator RunReleaseSequence()
+    private IEnumerator RunReleaseSequence(string replyNode)
     {
-        if (sequence.replyStepNodes == null) { releaseRoutine = null; yield break; }
+        if (string.IsNullOrWhiteSpace(replyNode)) { cup.SetDrainFrozen(false); releaseRoutine = null; yield break; }
 
-        int replyIndex = Mathf.Clamp(lastTriggeredStep - 1, 0, sequence.replyStepNodes.Length - 1);
-        string replyNode = sequence.replyStepNodes[replyIndex];
-        if (!string.IsNullOrWhiteSpace(replyNode))
-            _ = dialogueRunner.StartDialogue(replyNode);
+        // Wait for M's current dialogue node (lines + animations) to fully finish
+        // before starting Roberto's reply, so releasing early doesn't cut it off.
+        yield return new WaitUntil(() => !dialogueRunner.IsDialogueRunning);
+
+        // No-op if we never froze it (the early-start path already got this moving).
+        cup.SetDrainFrozen(false);
+
+        _ = dialogueRunner.StartDialogue(replyNode);
+
+        // Only fire the camera zoom-out here if the early-release path above didn't
+        // already fire it — otherwise this would restart the animation from scratch.
+        if (!zoomAlreadyTriggered && CameraController.Instance != null)
+            CameraController.Instance.TriggerZoomOut();
 
         releaseRoutine = null;
         yield break;

@@ -23,6 +23,21 @@ namespace Yarn.Unity
 
         static LocalizedLine? currentLine;
 
+        // Tracks the currently playing line's audio so external scripts (e.g.
+        // CupInteractionDirector) can ask "how much longer is this line talking?"
+        static float currentLineDuration;
+        static float currentLineStartTime;
+
+        /// <summary> Seconds left in the currently playing line's audio, or 0 if none is playing. </summary>
+        public static float RemainingLineTime
+        {
+            get
+            {
+                if (currentLineDuration <= 0f) return 0f;
+                return Mathf.Max(0f, currentLineDuration - (Time.time - currentLineStartTime));
+            }
+        }
+
         /// <summary>
         /// If <see langword="true"/>, the voice over view will request that the
         /// dialogue runner proceed to the next line when audio for the line has
@@ -158,6 +173,8 @@ namespace Yarn.Unity
             }
 
             // Start playing the audio.
+            currentLineDuration = voiceOverClip.length;
+            currentLineStartTime = Time.time;
             audioSource.PlayOneShot(voiceOverClip);
 
             // Playback may not begin immediately, so wait until it does (or if

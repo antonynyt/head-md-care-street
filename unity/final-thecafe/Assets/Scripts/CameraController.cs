@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
+    public static CameraController Instance { get; private set; }
+
     public CupFilling cupFilling;
 
     public float pressThreshold = 0.5f;
@@ -17,6 +19,7 @@ public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHa
 
     private void Awake()
     {
+        Instance = this;
         animator = GetComponent<Animator>();
     }
 
@@ -66,12 +69,22 @@ public class CameraController : MonoBehaviour, IPointerUpHandler, IPointerDownHa
 
                 if (cupFilling.CurrentStep >= 1)
                 {
-                    animator.SetTrigger("ZoomOut");
+                    // Block further input now, but the actual camera zoom-out is
+                    // fired later by TriggerZoomOut(), synced to when the reply's
+                    // <<ZoomOut>> Yarn command actually runs (see CupInteractionDirector).
                     released = true;
                 }
                 // else: drain naturally, can try again
             }
         }
+    }
+
+    /// <summary> Fires the camera's zoom-out animation. Called by CupInteractionDirector
+    /// once the reply node actually starts, so it stays in sync with the Yarn
+    /// <<ZoomOut>> command that sets CustomYarnCommands.lastZoomOutTime. </summary>
+    public void TriggerZoomOut()
+    {
+        animator.SetTrigger("ZoomOut");
     }
 
     private IEnumerator CheckLongPress()
