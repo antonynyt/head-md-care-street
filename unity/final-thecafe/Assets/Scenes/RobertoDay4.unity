@@ -4926,7 +4926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CupInteractionDirector
   cup: {fileID: 1835720001}
   dialogueRunner: {fileID: 1020848256}
-  SceneChangeWaitTime: 5
+  SceneChangeWaitTime: 1
   sequence:
     sequenceName: Day4
     fillStepNodes:
