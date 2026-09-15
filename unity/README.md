@@ -9,7 +9,7 @@ The interactive experience is developed on Unity.
 
 The interaction consist of long pressing. (1) you break a bike (2) you pour cafe in a cup. The time devoted to each conversation depends on the simple act of pouring a glass of a hot drink: the longer it is filled, the more the story you get.
 
-# Todo
+# Todo, DONE!
 
 - [x] Implement new dialogs recordings in Unity
 - [x] Set the discussion timings on each scene (`<<ZoomOut [time]>>` dans les .yarn)
