@@ -25237,10 +25237,6 @@ MonoBehaviour:
       - {fileID: 1170764075}
       - {fileID: 114399035}
   bikeBrake: {fileID: 0}
-  audioMixer: {fileID: 24100000, guid: 863805f3c0516402ea7a39d731fdcc29, type: 2}
-  voiceVolumeParameter: VoiceVolume
-  voiceFadeOutTargetDb: -80
-  voiceFadeOutDuration: 1
 --- !u!1001 &542798230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64142,6 +64138,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a89ff4e64178eb4bbfbfcab68a3078e, type: 3}
   m_PrefabInstance: {fileID: 1963109404}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1963751854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1963751856}
+  - component: {fileID: 1963751855}
+  m_Layer: 0
+  m_Name: InactivityResetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1963751855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963751854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dffc07226e99e4847a544585ceb6fd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: InactivityReset::InactivityReset.InactivityResetManager
+  defaultIdleTimeoutSeconds: 60
+  defaultCountdownDurationSeconds: 5
+  resetSceneOverride: 
+  autoCreateOverlay: 1
+--- !u!4 &1963751856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963751854}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1974628779
 GameObject:
   m_ObjectHideFlags: 0
@@ -73444,3 +73488,4 @@ SceneRoots:
   - {fileID: 240942164}
   - {fileID: 1494759241}
   - {fileID: 1003742484}
+  - {fileID: 1963751856}

@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "com.github.prossel.unity-inactivity-reset": {
+      "version": "https://github.com/prossel/Unity-Inactivity-Reset.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.inputsystem": "1.7.0",
+        "com.unity.textmeshpro": "3.0.6"
+      },
+      "hash": "b7f9d5d7faa61d5be63253d892343f34e865daa2"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.13",
       "depth": 0,
@@ -163,7 +173,7 @@
       }
     },
     "com.unity.test-framework.performance": {
-      "version": "3.4.0",
+      "version": "3.5.0",
       "depth": 3,
       "source": "registry",
       "dependencies": {
@@ -171,6 +181,14 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.unity.textmeshpro": {
+      "version": "5.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.ugui": "2.0.0"
+      }
     },
     "com.unity.timeline": {
       "version": "1.8.12",
