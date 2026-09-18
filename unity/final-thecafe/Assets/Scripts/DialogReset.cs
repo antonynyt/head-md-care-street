@@ -24,12 +24,6 @@ public class DialogReset : MonoBehaviour
             return;
         }
 
-        // Stop the dialogue if it's currently running
-        if (dialogueRunner.IsDialogueRunning)
-        {
-            _ = dialogueRunner.Stop();
-        }
-
         // Reset the current day in the DialogueDirectorBike
         DialogueDirectorBike.ResetCurrentDay();
 
