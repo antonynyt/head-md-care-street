@@ -99,4 +99,9 @@ public class DialogueDirectorBike : MonoBehaviour
             }
         }
     }
+
+    public static void ResetCurrentDay()
+    {
+        CurrentDay = 0;
+    }
 }
